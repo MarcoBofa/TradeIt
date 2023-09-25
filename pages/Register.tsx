@@ -14,19 +14,21 @@ const Register: React.FC = () => {
   return (
     <div className={styles.flex + " h-screen"}>
       <div className="w-1/2 bg-white p-10 flex items-center justify-center">
-        <div className="w-2/3 flex-row items-center justify-center space-x-6">
-          <Link
-            href="/"
-            className="text-orange-400 hover:text-orange-600 mb-10 inline-block"
-          >
-            ← Back to Home
-          </Link>
-          <Link
-            href="/Login"
-            className="text-orange-400 hover:text-orange-600 mb-10 inline-block"
-          >
-            Alredy Registered? →
-          </Link>
+        <div className="w-2/3 flex flex-col justify-between">
+          <div className="flex justify-between mb-10">
+            <Link
+              href="/"
+              className="text-orange-400 hover:text-orange-600 mb-10 inline-block"
+            >
+              ← Back to Home
+            </Link>
+            <Link
+              href="/Login"
+              className="text-orange-400 hover:text-orange-600 mb-10 inline-block"
+            >
+              Alredy Registered? →
+            </Link>
+          </div>
           <h2 className="text-3xl font-bold mb-6">Create Your Account!</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 flex space-x-4">
