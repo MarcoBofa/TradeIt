@@ -17,9 +17,14 @@ export default function Home() {
         width={1000}
         height={1000}
       />
-      <Link className="text-blue-600 hover:underline mb-4" href="/Register">
-        Want to try the Sign up? c:
-      </Link>
+      <div className="flex flex-row items-center justify-center space-x-10">
+        <Link className="text-blue-600 hover:underline mb-4" href="/Register">
+          Want to try the Sign up?
+        </Link>
+        <Link className="text-blue-600 hover:underline mb-4" href="/Login">
+          Or you prefer to Login? c:
+        </Link>
+      </div>
     </div>
   );
 }
