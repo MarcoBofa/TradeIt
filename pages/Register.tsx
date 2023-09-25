@@ -3,14 +3,18 @@ import React from "react";
 import "../app/globals.css";
 import InputField from "../app/components/InputField";
 import styles from "../app/stylings/custom.module.css";
-import Link from "next/link"; // Using Next.js's Link component
+import Link from "next/link";
 
 const Register: React.FC = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert("Sorry not implemented yet :(");
+  };
+
   return (
     <div className={styles.flex + " h-screen"}>
       <div className="w-1/2 bg-white p-10 flex items-center justify-center">
         <div className="w-2/3">
-          {/* Added Link to Home Page */}
           <Link
             href="/"
             className="text-orange-400 hover:text-orange-600 mb-10 inline-block"
@@ -18,7 +22,7 @@ const Register: React.FC = () => {
             ← Back to Home
           </Link>
           <h2 className="text-3xl font-bold mb-6">Create Your Account!</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4 flex space-x-4">
               <div className="w-1/2">
                 <InputField label="Name" type="text" />
@@ -60,7 +64,6 @@ const Register: React.FC = () => {
                 >
                   Privacy Policy
                 </a>{" "}
-                of Rentalo.
               </label>
             </div>
             <button
@@ -126,10 +129,10 @@ const Register: React.FC = () => {
             </span>
             <div className="text-center">
               <h2 className="text-3xl text-orange-500 font-bold mb-3">
-                Rent what you need
+                Join the Trading competion
               </h2>
               <p className="text-md text-white">
-                Find all the machinery and equipment you need
+                Show to the others who is the best trader
               </p>
             </div>
           </div>
@@ -139,10 +142,10 @@ const Register: React.FC = () => {
             </span>
             <div className="text-center">
               <h2 className="text-3xl text-orange-500 font-bold mb-3">
-                Easy and practical management
+                The main objective is to have fun!
               </h2>
               <p className="text-md text-white">
-                Easily manage your rentals from the platform
+                But remember that winning is always better
               </p>
             </div>
           </div>

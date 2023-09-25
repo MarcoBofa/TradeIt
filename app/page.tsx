@@ -3,15 +3,23 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div>
-        <div className="flex items-center justify-center text-rose-500 text-3xl mb-4">
-          CIAO!
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex flex-col items-center justify-center text-orange-500 text-3xl mb-4">
+        CIAO!
+        <div className="flex items-center justify-center text-orange-300 text-1xl mt-1">
+          This is my very simple (temporary) Tech Stack
         </div>
-        <Link className="text-blue-800 hover:underline" href="/Register">
-          Want to Sign up? c:{" "}
-        </Link>
       </div>
+      <Image
+        className="rounded-3xl mb-5"
+        src="/excalidraw.jpg"
+        alt="Description of Image"
+        width={1000}
+        height={1000}
+      />
+      <Link className="text-blue-600 hover:underline mb-4" href="/Register">
+        Want to try the Sign up? c:
+      </Link>
     </div>
   );
 }
