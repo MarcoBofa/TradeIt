@@ -6,7 +6,7 @@ import styles from "../app/stylings/custom.module.css";
 import Link from "next/link";
 
 const Register: React.FC = () => {
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     alert("Sorry not implemented yet :(");
   };
