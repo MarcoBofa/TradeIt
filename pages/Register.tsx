@@ -129,7 +129,7 @@ const Register: React.FC = () => {
             </span>
             <div className="text-center">
               <h2 className="text-3xl text-orange-500 font-bold mb-3">
-                Join the Trading competion
+                Join the Trading competition
               </h2>
               <p className="text-md text-white">
                 Show to the others who is the best trader
