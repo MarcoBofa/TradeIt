@@ -2,21 +2,41 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Path, useForm, UseFormRegister } from "react-hook-form";
 
-interface InputFieldProps {
-  label: string;
-  type?: string;
-  datePicker?: boolean;
+interface IFormInput {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, type, datePicker }) => {
-  const [focused, setFocused] = useState(false);
-  const [value, setValue] = useState<string>("");
-  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
+interface InputFieldProps {
+  label: Path<IFormInput>;
+  type?: string;
+  datePicker?: boolean;
+  register: UseFormRegister<IFormInput>;
+  required: boolean;
+  watch: (name: string) => any;
+}
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+const InputField: React.FC<InputFieldProps> = ({
+  label,
+  type,
+  datePicker,
+  register,
+  required,
+  watch,
+}) => {
+  const [focused, setFocused] = useState(false);
+  //const [value, setValue] = useState<string>("");
+  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
+  const value = watch(label); // providing an empty string as default value
+
+  // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setValue(event.target.value);
+  // };
 
   if (datePicker) {
     return (
@@ -57,14 +77,13 @@ const InputField: React.FC<InputFieldProps> = ({ label, type, datePicker }) => {
     <div className="relative">
       <input
         type={type}
-        value={value}
-        onChange={handleInputChange}
+        value={watch(label)}
+        {...register(label, { required })}
         className={`w-full border p-4 rounded transition-all duration-200 ${
           focused || value ? "border-orange-500 border-3" : "border-gray-300"
         } outline-none`}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        required
       />
       <label
         htmlFor={label}

@@ -4,11 +4,42 @@ import "../app/globals.css";
 import InputField from "../app/components/InputField";
 import styles from "../app/stylings/custom.module.css";
 import Link from "next/link";
+import { set, useForm } from "react-hook-form";
+import { Akaya_Kanadaka } from "next/font/google";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
+interface IFormInput {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 const Register: React.FC = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    alert("Sorry not implemented yet :(");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    watch,
+  } = useForm<IFormInput>({
+    defaultValues: {
+      name: "",
+      surname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const onSubmit = (data: IFormInput) => {
+    console.log(data);
+    if (data.password !== data.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+    reset();
   };
 
   return (
@@ -30,26 +61,60 @@ const Register: React.FC = () => {
             </Link>
           </div>
           <h2 className="text-3xl font-bold mb-6">Create Your Account!</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4 flex space-x-4">
               <div className="w-1/2">
-                <InputField label="Name" type="text" />
+                <InputField
+                  label="name"
+                  type="text"
+                  register={register}
+                  watch={watch}
+                  required
+                />
               </div>
               <div className="w-1/2">
-                <InputField label="Surname" type="text" />
+                <InputField
+                  label="surname"
+                  type="text"
+                  register={register}
+                  watch={watch}
+                  required
+                />
               </div>
             </div>
+            {/* <div className="mb-4">
+              <InputField
+                label="Date of Birth"
+                datePicker
+                onDateChange={handleDateChange}
+              />
+            </div> */}
             <div className="mb-4">
-              <InputField label="Date of Birth" datePicker />
+              <InputField
+                label="email"
+                type="email"
+                register={register}
+                watch={watch}
+                required
+              />
             </div>
             <div className="mb-4">
-              <InputField label="Email" type="email" />
+              <InputField
+                label="password"
+                type="password"
+                register={register}
+                watch={watch}
+                required
+              />
             </div>
             <div className="mb-4">
-              <InputField label="Password" type="password" />
-            </div>
-            <div className="mb-4">
-              <InputField label="Confirm Password" type="password" />
+              <InputField
+                label="confirmPassword"
+                type="password"
+                register={register}
+                watch={watch}
+                required
+              />
             </div>
             <div className="mb-4 pt-7 pb-7 flex items-center">
               <input
@@ -76,6 +141,7 @@ const Register: React.FC = () => {
             </div>
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-full bg-orange-600 text-white p-3 rounded-full font-bold hover:bg-orange-500"
             >
               Create Account
