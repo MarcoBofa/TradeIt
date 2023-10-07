@@ -1,97 +1,82 @@
-// login.tsx
 import React, { useState } from "react";
-import Image from "next/image";
-import "../app/globals.css";
 import Link from "next/link";
+import "../app/globals.css";
+import InputField from "@/app/components/InputField";
+import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterProvider from "@/app/components/Providers/ToasterProvider";
+import { IFormInput } from "@/types";
 
+interface IFormLogin {
+  email: string;
+  password: string;
+}
 const Login: React.FC = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    watch,
+  } = useForm<IFormLogin>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission logic here...
+  const onSubmit = (data: IFormLogin) => {
+    console.log(data);
+    reset();
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white">
-      <div className="p-8 bg-white rounded-lg shadow-top max-w-md w-full">
-        <div className="absolute inset-0">
-          <svg
-            className="w-full h-full"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <linearGradient
-                id="greyGradient"
-                x1="0%"
-                y1="100%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop
-                  offset="0%"
-                  style={{ stopColor: "rgba(130, 62, 5, 1)" }}
-                />
-                <stop offset="60%" style={{ stopColor: "rgba(0, 0, 0, 1)" }} />
-              </linearGradient>
-              <clipPath id="triangleClip">
-                <polygon points="0,100 100,0 100,100" />
-              </clipPath>
-            </defs>
-            <rect
-              x="0"
-              y="0"
-              width="100"
-              height="100"
-              fill="url(#greyGradient)"
-              clipPath="url(#triangleClip)"
-            />
-          </svg>
-        </div>
+    <div className="flex items-center justify-center min-h-screen bg-white relative">
+      <ToasterProvider />
+      <svg
+        className="absolute w-full h-full"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <path d="M0,0 C50,-10 20,70 0,100 L0,0 Z" fill="#1E90FF" />
+      </svg>
+
+      <svg
+        className="absolute w-full h-full"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <path d="M100,100 C60,90 90,30 100,0 L100,100 Z" fill="#1E90FF" />
+      </svg>
+
+      <svg
+        className="absolute"
+        style={{ top: "30%", right: "37%", transform: "translate(50%, -50%)" }}
+        viewBox="0 0 100 100"
+        width="100"
+        height="100"
+      >
+        <circle cx="50" cy="50" r="50" fill="#1E90FF" />
+      </svg>
+
+      <div className="p-8 bg-white rounded-lg shadow-top max-w-md w-full relative z-10">
         <h1 className="text-orange-500 text-3xl mb-4">Login</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Email Address
-            </label>
-            <input
+            <InputField
+              label="email"
               type="email"
-              name="email"
-              id="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              register={register}
+              watch={watch}
               required
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Password
-            </label>
-            <input
+            <InputField
+              label="password"
               type="password"
-              name="password"
-              id="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              register={register}
+              watch={watch}
               required
             />
           </div>

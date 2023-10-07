@@ -3,14 +3,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Path, useForm, UseFormRegister } from "react-hook-form";
-
-interface IFormInput {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { IFormInput } from "@/types";
 
 interface InputFieldProps {
   label: Path<IFormInput>;

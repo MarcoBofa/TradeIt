@@ -6,16 +6,11 @@ import styles from "../app/stylings/custom.module.css";
 import Link from "next/link";
 import { set, useForm } from "react-hook-form";
 import { Akaya_Kanadaka } from "next/font/google";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
+import ToasterProvider from "@/app/components/Providers/ToasterProvider";
+import { IFormInput } from "@/types";
 
-interface IFormInput {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
 const Register: React.FC = () => {
   const {
     register,
@@ -35,6 +30,10 @@ const Register: React.FC = () => {
 
   const onSubmit = (data: IFormInput) => {
     console.log(data);
+    if (data.password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
     if (data.password !== data.confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -44,6 +43,7 @@ const Register: React.FC = () => {
 
   return (
     <div className={styles.flex + " h-screen"}>
+      <ToasterProvider />
       <div className="w-1/2 bg-white p-10 flex items-center justify-center">
         <div className="w-2/3 flex flex-col justify-between">
           <div className="flex justify-between mb-10">
