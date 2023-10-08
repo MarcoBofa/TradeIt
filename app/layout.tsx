@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <ToasterProvider />
-        <div className="pb-20 pt-28">{children}</div>
+        <div>{children}</div>
       </body>
     </html>
   );
