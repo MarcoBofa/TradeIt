@@ -132,19 +132,19 @@ const Register: React.FC = () => {
               />
               <label htmlFor="termsCheckbox" className="text-sm flex-wrap">
                 I have read and accept the{" "}
-                <a
+                <Link
                   href="/terms"
                   className="text-orange-400 hover:text-orange-600"
                 >
                   Terms of Service
-                </a>{" "}
+                </Link>{" "}
                 and the{" "}
-                <a
+                <Link
                   href="/privacy"
                   className="text-orange-400 hover:text-orange-600"
                 >
                   Privacy Policy
-                </a>{" "}
+                </Link>{" "}
               </label>
             </div>
             <button
