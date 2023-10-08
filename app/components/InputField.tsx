@@ -31,6 +31,14 @@ const InputField: React.FC<InputFieldProps> = ({
   //   setValue(event.target.value);
   // };
 
+  const formatLabel = (label: string) => {
+    const l = label.charAt(0).toUpperCase() + label.slice(1);
+    if (l === "ConfirmPassword") {
+      return "Confirm Password";
+    }
+    return l;
+  };
+
   if (datePicker) {
     return (
       <div className="relative">
@@ -79,7 +87,7 @@ const InputField: React.FC<InputFieldProps> = ({
         onBlur={() => setFocused(false)}
       />
       <label
-        htmlFor={label}
+        htmlFor={formatLabel(label)}
         className={`absolute left-2 px-1 text-gray-700 transition-all duration-200 ${
           focused || value
             ? "text-xs top-[-8px] text-orange-500"
@@ -91,7 +99,7 @@ const InputField: React.FC<InputFieldProps> = ({
           zIndex: focused || value ? 1 : "auto",
         }}
       >
-        {label}
+        {formatLabel(label)}
       </label>
     </div>
   );

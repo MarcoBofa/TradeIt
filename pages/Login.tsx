@@ -38,7 +38,13 @@ const Login: React.FC = () => {
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
       >
-        <path d="M0,0 C50,-10 20,70 0,100 L0,0 Z" fill="#1E90FF" />
+        <defs>
+          <radialGradient id="gradient1" cx="50%" cy="50%" r="60%">
+            <stop offset="10%" style={{ stopColor: "#ffac12" }} />
+            <stop offset="90%" style={{ stopColor: "#F97316" }} />
+          </radialGradient>
+        </defs>
+        <path d="M0,0 C50,-10 20,70 0,100 L0,0 Z" fill="url(#gradient1)" />
       </svg>
 
       <svg
@@ -46,7 +52,16 @@ const Login: React.FC = () => {
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
       >
-        <path d="M100,100 C60,90 90,30 100,0 L100,100 Z" fill="#1E90FF" />
+        <defs>
+          <radialGradient id="gradient2" cx="50%" cy="50%" r="60%">
+            <stop offset="10%" style={{ stopColor: "#ffac12" }} />
+            <stop offset="90%" style={{ stopColor: "#F97316" }} />
+          </radialGradient>
+        </defs>
+        <path
+          d="M100,100 C60,90 90,30 100,0 L100,100 Z"
+          fill="url(#gradient2)"
+        />
       </svg>
 
       <svg
@@ -56,7 +71,13 @@ const Login: React.FC = () => {
         width="100"
         height="100"
       >
-        <circle cx="50" cy="50" r="50" fill="#1E90FF" />
+        <defs>
+          <radialGradient id="gradient3" cx="50%" cy="50%" r="50%">
+            <stop offset="10%" style={{ stopColor: "#ffac12" }} />
+            <stop offset="90%" style={{ stopColor: "#6225fa" }} />
+          </radialGradient>
+        </defs>
+        <circle cx="50" cy="50" r="50" fill="url(#gradient3)" />
       </svg>
 
       <div className="p-8 bg-white rounded-lg shadow-top max-w-md w-full relative z-10">
@@ -90,13 +111,13 @@ const Login: React.FC = () => {
         <div className="flex justify-between mb-1">
           <Link
             href="/Register"
-            className="text-orange-400 hover:text-orange-600 mt-5 inline-block"
+            className="text-blue-500 hover:text-blue-700 mt-7 inline-block"
           >
             ← Need to Register?
           </Link>
           <Link
             href="/"
-            className="text-orange-400 hover:text-orange-600 mt-5 inline-block"
+            className="text-blue-500 hover:text-blue-700 mt-7 inline-block"
           >
             Forgot your password? →
           </Link>

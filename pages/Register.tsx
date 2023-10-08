@@ -12,6 +12,7 @@ import ToasterProvider from "@/app/components/Providers/ToasterProvider";
 import { IFormInput } from "@/types";
 
 const Register: React.FC = () => {
+  const [termsBtn, setTermsBtn] = useState(false);
   const {
     register,
     handleSubmit,
@@ -29,7 +30,6 @@ const Register: React.FC = () => {
   });
 
   const onSubmit = (data: IFormInput) => {
-    console.log(data);
     if (data.password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       return;
@@ -38,6 +38,12 @@ const Register: React.FC = () => {
       toast.error("Passwords do not match");
       return;
     }
+
+    if (!termsBtn) {
+      toast.error("Please accept the Terms of Service and Privacy Policy.");
+      return;
+    }
+    console.log(data);
     reset();
   };
 
@@ -120,6 +126,8 @@ const Register: React.FC = () => {
               <input
                 type="checkbox"
                 id="termsCheckbox"
+                checked={termsBtn}
+                onChange={() => setTermsBtn(!termsBtn)}
                 className="mr-4 text-orange-300 w-6 h-6"
               />
               <label htmlFor="termsCheckbox" className="text-sm flex-wrap">
