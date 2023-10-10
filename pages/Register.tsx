@@ -30,7 +30,7 @@ const Register: React.FC = () => {
   });
 
   const onSubmit = (data: IFormInput) => {
-    if (data.password.length < 6) {
+    if (data.password && data.password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       return;
     }
@@ -150,7 +150,7 @@ const Register: React.FC = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-orange-600 text-white p-3 rounded-full font-bold hover:bg-orange-500"
+              className="w-full bg-orange-500 text-white p-3 rounded-full font-bold hover:bg-orange-600"
             >
               Create Account
             </button>

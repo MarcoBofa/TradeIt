@@ -5,13 +5,17 @@ import InputField from "@/app/components/InputField";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterProvider from "@/app/components/Providers/ToasterProvider";
-import { IFormInput } from "@/types";
+import { IFormInput, ModalForm } from "@/types";
+import RecoverPassModal from "@/app/components/recoverPassModal";
 
 interface IFormLogin {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
+
 const Login: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -25,9 +29,23 @@ const Login: React.FC = () => {
     },
   });
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const onSubmit = (data: IFormLogin) => {
     console.log(data);
     reset();
+  };
+
+  const handleModalSubmit = (data: ModalForm) => {
+    // Handle modal form submission
+    console.log(data);
+    setIsModalOpen(false);
   };
 
   return (
@@ -115,14 +133,20 @@ const Login: React.FC = () => {
           >
             ← Need to Register?
           </Link>
-          <Link
-            href="/"
+          <a
+            href="#"
+            onClick={handleOpenModal}
             className="text-blue-500 hover:text-blue-700 mt-7 inline-block"
           >
             Forgot your password? →
-          </Link>
+          </a>
         </div>
       </div>
+      <RecoverPassModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        submitData={handleModalSubmit}
+      />
     </div>
   );
 };
