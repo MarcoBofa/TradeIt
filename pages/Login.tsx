@@ -7,6 +7,9 @@ import toast, { Toaster } from "react-hot-toast";
 import ToasterProvider from "@/app/components/Providers/ToasterProvider";
 import { IFormInput, ModalForm } from "@/types";
 import RecoverPassModal from "@/app/components/recoverPassModal";
+import { signIn } from "next-auth/react";
+import { Single_Day } from "next/font/google";
+import { useRouter } from "next/navigation";
 
 interface IFormLogin {
   email?: string;
@@ -14,6 +17,7 @@ interface IFormLogin {
 }
 
 const Login: React.FC = () => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
@@ -37,9 +41,28 @@ const Login: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const onSubmit = (data: IFormLogin) => {
+  const onSubmit = async (data: IFormLogin) => {
     console.log(data);
-    reset();
+
+    try {
+      const callback = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+      console.log(callback);
+
+      if (callback?.ok) {
+        toast.success("Logged in!");
+        router.push("/");
+      } else if (callback?.error) {
+        toast.error(callback.error);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("An unexpected error occurred");
+    } finally {
+      reset();
+    }
   };
 
   const handleModalSubmit = (data: ModalForm) => {

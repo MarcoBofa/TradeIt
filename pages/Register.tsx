@@ -10,6 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import ToasterProvider from "@/app/components/Providers/ToasterProvider";
 import { IFormInput } from "@/types";
+import axios from "axios";
 
 const Register: React.FC = () => {
   const [termsBtn, setTermsBtn] = useState(false);
@@ -43,6 +44,16 @@ const Register: React.FC = () => {
       toast.error("Please accept the Terms of Service and Privacy Policy.");
       return;
     }
+
+    axios
+      .post("/api/register", data)
+      .then(() => {
+        toast.success("Registered!");
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+
     console.log(data);
     reset();
   };
