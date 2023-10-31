@@ -22,7 +22,7 @@ export default function Home() {
           Want to try the Sign up?
         </Link>
         <Link className="text-blue-600 hover:underline mb-4" href="/Login">
-          Or you prefer to Login? c:
+          Or prefer to Login? c:
         </Link>
       </div>
     </div>

@@ -2,6 +2,7 @@
 import { User } from "@prisma/client";
 import { Squash as Hamburger } from "hamburger-react";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 
 import Link from "next/link";
 
@@ -18,43 +19,40 @@ const Navbar: React.FC<navbarPros> = ({ currentUser }) => {
         <div className="text-2xl font-bold">TradeIt</div>
         <div className="relative">
           <div
-            className="rounded-full bg-gray-800 px-4 py-2 flex items-center cursor-pointer"
+            className="rounded-full text-xl bg-gray-800 px-3 py-1 flex items-center cursor-pointer"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             {currentUser ? currentUser.name : "Login"}
-            <Hamburger
-              toggled={dropdownOpen}
-              toggle={setDropdownOpen}
-              size={20}
-            />
+            <div style={{ marginRight: "-8px" }}>
+              <Hamburger
+                toggled={dropdownOpen}
+                toggle={setDropdownOpen}
+                size={20}
+              />
+            </div>
           </div>
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 py-2 bg-gray-900 text-white rounded shadow-xl">
               {currentUser ? (
                 <>
-                  <Link
-                    href="/logout"
+                  <a className="block px-4 py-2 hover:bg-gray-800">Profile</a>
+                  <a
+                    onClick={() => signOut()}
                     className="block px-4 py-2 hover:bg-gray-800"
                   >
                     Logout
-                  </Link>
-                  <Link
-                    href="/profile"
-                    className="block px-4 py-2 hover:bg-gray-800"
-                  >
-                    Profile
-                  </Link>
+                  </a>
                 </>
               ) : (
                 <>
                   <Link
-                    href="/login"
+                    href="/Login"
                     className="block px-4 py-2 hover:bg-gray-800"
                   >
                     Login
                   </Link>
                   <Link
-                    href="/signup"
+                    href="/Register"
                     className="block px-4 py-2 hover:bg-gray-800"
                   >
                     Signup
