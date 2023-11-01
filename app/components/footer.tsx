@@ -1,11 +1,14 @@
 import React, { FC } from "react";
+import Link from "next/link";
 
 const Footer: FC = () => {
   return (
     <footer className="bg-gray-800 py-8 px-4 sm:px-6 lg:px-8 text-gray-300">
       <div className="flex flex-wrap justify-between items-center">
         <div className="w-full sm:w-1/3 text-center sm:text-left">
-          <h3 className="text-3xl font-bold mb-2">TradeIt</h3>
+          <Link href="/">
+            <h3 className="text-3xl font-bold mb-2">TradeIt</h3>
+          </Link>
         </div>
         <div className="w-full sm:w-1/3 text-center mb-4 sm:mb-0">
           <div className="flex justify-center mb-2">
