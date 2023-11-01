@@ -21,6 +21,9 @@ export default function Home() {
         <Link className="text-blue-600 hover:underline mb-4" href="/Register">
           Want to try the Sign up?
         </Link>
+        <Link className="text-blue-600 hover:underline mb-4" href="/dashboard">
+          Check the Dashboard (JUST UI :c)
+        </Link>
         <Link className="text-blue-600 hover:underline mb-4" href="/Login">
           Or prefer to Login? c:
         </Link>
