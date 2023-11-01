@@ -38,21 +38,21 @@ const Footer: FC = () => {
       <div className="w-full text-gray-500 text-center">
         <p>
           © 2023 All rights reserved -{" "}
-          <a href="#" className="text-gray-500 hover:text-gray-100">
+          <Link href="/" className="text-gray-500 hover:text-gray-100">
             Legal Notes
-          </a>{" "}
+          </Link>{" "}
           -{" "}
-          <a href="#" className="text-gray-500 hover:text-gray-100">
+          <Link href="/" className="text-gray-500 hover:text-gray-100">
             Privacy Policy
-          </a>{" "}
+          </Link>{" "}
           -{" "}
-          <a href="#" className="text-gray-500 hover:text-gray-100">
+          <Link href="/" className="text-gray-500 hover:text-gray-100">
             General Terms of Use
-          </a>{" "}
+          </Link>{" "}
           -{" "}
-          <a href="#" className="text-gray-500 hover:text-gray-100">
+          <Link href="/" className="text-gray-500 hover:text-gray-100">
             Cookie Management
-          </a>
+          </Link>
         </p>
       </div>
     </footer>

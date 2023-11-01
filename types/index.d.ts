@@ -1,3 +1,5 @@
+import { User } from "@prisma/client";
+
 export type IFormInput = {
   name?: string;
   surname?: string;
@@ -8,4 +10,9 @@ export type IFormInput = {
 
 export type ModalForm = {
   email?: string;
+};
+
+export type safeUser = Omit<User, "createdAt" | "updatedAt"> & {
+  createdAt: string;
+  updatedAt: string;
 };

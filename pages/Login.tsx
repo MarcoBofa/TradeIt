@@ -9,7 +9,8 @@ import { IFormInput, ModalForm } from "@/types";
 import RecoverPassModal from "@/app/components/recoverPassModal";
 import { signIn } from "next-auth/react";
 import { Single_Day } from "next/font/google";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 interface IFormLogin {
   email?: string;
@@ -144,9 +145,27 @@ const Login: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full p-2 text-white bg-orange-500 rounded-md hover:bg-orange-600"
+            className="w-full p-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 mb-4"
           >
             Login
+          </button>
+          <button
+            className="w-full p-2 text-white bg-gray-800 rounded-md hover:bg-blue-900 mb-4 flex items-center justify-center"
+            onClick={() =>
+              signIn("github", { callbackUrl: `${router.basePath}/` })
+            }
+          >
+            <FaGithub className="mr-2" />
+            Login with GitHub
+          </button>
+          <button
+            className="w-full p-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 flex items-center justify-center"
+            onClick={() =>
+              signIn("github", { callbackUrl: `${router.basePath}/` })
+            }
+          >
+            <FaGoogle className="mr-2" />
+            Login with Google
           </button>
         </form>
         <div className="flex justify-between mb-1">

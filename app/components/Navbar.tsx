@@ -1,13 +1,13 @@
 "use client";
-import { User } from "@prisma/client";
 import { Squash as Hamburger } from "hamburger-react";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 
 import Link from "next/link";
+import { safeUser } from "@/types";
 
 interface navbarPros {
-  currentUser?: User | null;
+  currentUser?: safeUser | null;
 }
 
 const Navbar: React.FC<navbarPros> = ({ currentUser }) => {
@@ -16,13 +16,17 @@ const Navbar: React.FC<navbarPros> = ({ currentUser }) => {
   return (
     <div className="bg-gray-900 text-white py-4 px-6">
       <div className="mx-auto flex justify-between items-center">
-        <div className="text-2xl font-bold">TradeIt</div>
+        <Link href="/">
+          <div className="text-2xl font-bold">TradeIt</div>
+        </Link>
         <div className="relative">
           <div
             className="rounded-full text-xl bg-gray-800 px-3 py-1 flex items-center cursor-pointer"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
-            {currentUser ? currentUser.name : "Login"}
+            <span className="ml-2">
+              {currentUser ? currentUser.name : "Login"}
+            </span>
             <div style={{ marginRight: "-8px" }}>
               <Hamburger
                 toggled={dropdownOpen}

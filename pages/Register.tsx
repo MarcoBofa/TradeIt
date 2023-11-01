@@ -11,6 +11,9 @@ import { useState } from "react";
 import ToasterProvider from "@/app/components/Providers/ToasterProvider";
 import { IFormInput } from "@/types";
 import axios from "axios";
+import { signIn } from "next-auth/react";
+import { FaGithub, FaGoogle } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 const Register: React.FC = () => {
   const [termsBtn, setTermsBtn] = useState(false);
@@ -29,6 +32,7 @@ const Register: React.FC = () => {
       confirmPassword: "",
     },
   });
+  const router = useRouter();
 
   const onSubmit = (data: IFormInput) => {
     if (data.password && data.password.length < 6) {
@@ -63,7 +67,7 @@ const Register: React.FC = () => {
       <ToasterProvider />
       <div className="w-1/2 bg-white p-10 flex items-center justify-center">
         <div className="w-2/3 flex flex-col justify-between">
-          <div className="flex justify-between mb-10">
+          <div className="flex justify-between mb-6">
             <Link
               href="/"
               className="text-orange-400 hover:text-orange-600 mb-10 inline-block"
@@ -164,6 +168,15 @@ const Register: React.FC = () => {
               className="w-full bg-orange-500 text-white p-3 rounded-full font-bold hover:bg-orange-600"
             >
               Create Account
+            </button>
+            <button
+              className="w-full p-2 text-white bg-gray-800 rounded-full hover:bg-blue-900 mt-4 flex items-center justify-center"
+              onClick={() =>
+                signIn("github", { callbackUrl: `${router.basePath}/` })
+              }
+            >
+              <FaGithub className="mr-2" />
+              Continue with GitHub
             </button>
           </form>
         </div>

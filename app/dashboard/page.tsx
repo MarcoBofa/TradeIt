@@ -1,4 +1,4 @@
-import "../app/globals.css";
+import "../globals.css";
 import React from "react";
 import Footer from "@/app/components/footer";
 import Sidebar from "@/app/components/dashboardComp/Sidebar";
@@ -19,7 +19,6 @@ const Dashboard: React.FC = () => {
           </h1>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
