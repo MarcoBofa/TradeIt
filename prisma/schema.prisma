@@ -21,6 +21,7 @@ model User {
   hashedPassword String? //optiona for allowing social login
   emailVerified DateTime?
   accounts Account[]
+  watchlists Watchlist[]
 }
 
 model Account {
@@ -40,4 +41,14 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+
+model Watchlist {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  stockSymbols String[] 
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId]) 
 }
