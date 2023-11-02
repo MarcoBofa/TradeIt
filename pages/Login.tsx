@@ -161,7 +161,7 @@ const Login: React.FC = () => {
           <button
             className="w-full p-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 flex items-center justify-center"
             onClick={() =>
-              signIn("github", { callbackUrl: `${router.basePath}/` })
+              signIn("google", { callbackUrl: `${router.basePath}/` })
             }
           >
             <FaGoogle className="mr-2" />

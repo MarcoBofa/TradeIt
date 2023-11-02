@@ -53,6 +53,7 @@ const Register: React.FC = () => {
       .post("/api/register", data)
       .then(() => {
         toast.success("Registered!");
+        router.push("/Login");
       })
       .catch((error) => {
         toast.error(error);
@@ -177,6 +178,15 @@ const Register: React.FC = () => {
             >
               <FaGithub className="mr-2" />
               Continue with GitHub
+            </button>
+            <button
+              className="w-full p-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 mt-4 flex items-center justify-center"
+              onClick={() =>
+                signIn("google", { callbackUrl: `${router.basePath}/` })
+              }
+            >
+              <FaGoogle className="mr-2" />
+              Login with Google
             </button>
           </form>
         </div>
