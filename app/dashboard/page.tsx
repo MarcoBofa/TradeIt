@@ -1,8 +1,6 @@
 import "../globals.css";
 import React from "react";
-import Footer from "@/app/components/footer";
 import Sidebar from "@/app/components/dashboardComp/Sidebar";
-import Navbar from "@/app/components/Navbar";
 
 const Dashboard: React.FC = () => {
   return (
