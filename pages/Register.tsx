@@ -186,7 +186,7 @@ const Register: React.FC = () => {
               }
             >
               <FaGoogle className="mr-2" />
-              Login with Google
+              Continue with Google
             </button>
           </form>
         </div>
