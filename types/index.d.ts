@@ -16,3 +16,8 @@ export type safeUser = Omit<User, "createdAt" | "updatedAt"> & {
   createdAt: string;
   updatedAt: string;
 };
+
+interface watchlistProps {
+  watchlist: string[];
+  setWatchlist: React.Dispatch<React.SetStateAction<string[]>>;
+}

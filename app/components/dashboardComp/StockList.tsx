@@ -3,6 +3,8 @@ import { fetchData } from "next-auth/client/_utils";
 import React, { useState, useEffect } from "react";
 import finnHub from "@/app/api/stocks/finnHub";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import { watchlistProps } from "@/types";
+import { toast } from "react-hot-toast";
 
 interface StockData {
   s: string; // Stock symbol
@@ -15,15 +17,7 @@ interface StockData {
   pc: number; // Previous close price
 }
 
-const StockList: React.FC = () => {
-  const [watchlist, setWatchlist] = useState([
-    "MSFT",
-    "AAPL",
-    "TSLA",
-    "PYPL",
-    "ELF",
-    "AMD",
-  ]);
+const StockList: React.FC<watchlistProps> = ({ watchlist, setWatchlist }) => {
   const [stockData, setStockData] = useState<StockData[]>([]);
 
   useEffect(() => {
@@ -44,8 +38,14 @@ const StockList: React.FC = () => {
 
         const data = await Promise.all(promises);
         setStockData(data);
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        if (error.response && error.response.status === 403) {
+          toast.error(
+            `Access denied for stock symbol, reload page to continue`
+          );
+        } else {
+          console.log(error);
+        }
       }
     };
 
@@ -70,7 +70,6 @@ const StockList: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h1 className="text-3xl">TEMPORARY WATCHLIST</h1>
       <div className="overflow-x-auto mt-6">
         <table className="min-w-full leading-normal">
           <thead>
