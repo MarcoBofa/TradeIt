@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { Inter, Nunito } from "next/font/google";
 import ToasterProvider from "./components/Providers/ToasterProvider";
 import Footer from "./components/footer";
-import { get } from "http";
 import getUser from "./actions/getUser";
 import Navbar from "./components/Navbar";
 
@@ -22,6 +21,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const currentUser = await getUser();
+
   return (
     <html lang="en">
       <body className={font.className}>

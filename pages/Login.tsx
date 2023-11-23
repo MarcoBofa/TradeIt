@@ -54,7 +54,7 @@ const Login: React.FC = () => {
 
       if (callback?.ok) {
         toast.success("Logged in!");
-        router.push("/");
+        router.push("/dashboard");
       } else if (callback?.error) {
         toast.error(callback.error);
       }
@@ -152,7 +152,7 @@ const Login: React.FC = () => {
           <button
             className="w-full p-2 text-white bg-gray-800 rounded-md hover:bg-blue-900 mb-4 flex items-center justify-center"
             onClick={() =>
-              signIn("github", { callbackUrl: `${router.basePath}/` })
+              signIn("github", { callbackUrl: `${router.basePath}/dashboard` })
             }
           >
             <FaGithub className="mr-2" />
@@ -161,7 +161,7 @@ const Login: React.FC = () => {
           <button
             className="w-full p-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 flex items-center justify-center"
             onClick={() =>
-              signIn("google", { callbackUrl: `${router.basePath}/` })
+              signIn("google", { callbackUrl: `${router.basePath}/dashboard` })
             }
           >
             <FaGoogle className="mr-2" />

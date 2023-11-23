@@ -1,0 +1,56 @@
+// "use client";
+// import "../globals.css";
+// import React, { useEffect, useState } from "react";
+// import Sidebar from "@/app/components/dashboardComp/Sidebar";
+// import MainComponent from "../components/dashboardComp/MainContent";
+// import getUser from "../actions/getUser";
+// import { getServerSession } from "next-auth";
+// import { authOptions } from "@/pages/api/auth/[...nextauth]";
+// import { redirect } from "next/navigation";
+
+// import { safeUser } from "@/types";
+// import { set } from "react-hook-form";
+
+// interface DashboardProps {
+//   user: safeUser;
+// }
+
+// const Dashboard: React.FC = () => {
+//   const [user, setUser] = useState<safeUser>();
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         // Make a request to the API endpoint
+//         const response = await fetch("/api/userSession");
+
+//         // Check if the response is OK (status code 200)
+//         if (!response.ok) {
+//           throw new Error(`Error: ${response.status}`);
+//         }
+
+//         // Parse the JSON response
+//         const userData = await response.json();
+//         console.log(userData);
+//         // Update the state with the user data
+//         setUser(userData);
+//       } catch (error) {
+//         console.error("Failed to fetch user data:", error);
+//         // Handle the error appropriately
+//         // You might want to set some error state here
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+
+//   return (
+//     <div className="flex min-h-screen flex-col">
+//       <div className="flex flex-1 h-full">
+//         <Sidebar />
+//         {user ? <MainComponent user={user} /> : <div>No user data</div>}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Dashboard;

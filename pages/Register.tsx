@@ -30,6 +30,7 @@ const Register: React.FC = () => {
       email: "",
       password: "",
       confirmPassword: "",
+      role: "user",
     },
   });
   const router = useRouter();

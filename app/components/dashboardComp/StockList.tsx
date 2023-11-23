@@ -5,6 +5,7 @@ import finnHub from "@/app/api/stocks/finnHub";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { watchlistProps } from "@/types";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
 interface StockData {
   s: string; // Stock symbol
@@ -66,6 +67,17 @@ const StockList: React.FC<watchlistProps> = ({ watchlist, setWatchlist }) => {
 
   const deleteStock = (symbol: string) => {
     setWatchlist((prev) => prev.filter((stock) => stock !== symbol));
+    const updatedWatchlist = watchlist.filter((stock) => stock !== symbol);
+
+    //console.log(watchlist);
+    axios
+      .post(`/api/watchlist`, { watchlist: updatedWatchlist })
+      .then(() => {
+        console.log("Removed from watchlist");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   return (

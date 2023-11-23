@@ -11,8 +11,29 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
+      profile(profile: any) {
+        let userRole = "user";
+
+        if (profile?.email === process.env.ADMIN_EMAIL) {
+          userRole = "admin";
+        }
+
+        return {
+          id: profile.id,
+          email: profile?.email,
+          name: profile?.login,
+          image: profile?.avatar_url,
+          role: userRole,
+        };
+      },
+      clientId:
+        process.env.NODE_ENV === "development"
+          ? (process.env.GITHUB_ID_DEV as string)
+          : (process.env.GITHUB_ID as string),
+      clientSecret:
+        process.env.NODE_ENV === "development"
+          ? (process.env.GITHUB_SECRET_DEV as string)
+          : (process.env.GITHUB_SECRET as string),
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -52,6 +73,16 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) token.role = user.role;
+      return token;
+    },
+    async session({ session, token }) {
+      if (session?.user) session.user.role = token.role;
+      return session;
+    },
+  },
   pages: {
     signIn: "/",
   },

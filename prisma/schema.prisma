@@ -16,6 +16,7 @@ model User {
   surname   String?
   email     String   @unique
   image     String?  
+  role      String   @default("user")
   createdAt DateTime @default(now()) 
   updatedAt DateTime @updatedAt
   hashedPassword String? //optiona for allowing social login
@@ -45,10 +46,9 @@ model Account {
 
 
 model Watchlist {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  stockSymbols String[] 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @unique @db.ObjectId
+  stockSymbols String[]
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId]) 
 }

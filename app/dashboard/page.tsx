@@ -1,33 +1,39 @@
-"use client";
-import "../globals.css";
+import "../../app/globals.css";
 import React from "react";
 import Sidebar from "@/app/components/dashboardComp/Sidebar";
-import StockList from "../components/dashboardComp/StockList";
-import SearchBar from "../components/dashboardComp/SearchBar";
-import { useState } from "react";
 import { watchlistProps } from "@/types";
+import MainComponent from "../components/dashboardComp/MainContent";
+import getUser from "../actions/getUser";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { redirect } from "next/navigation";
 
-const Dashboard: React.FC = () => {
-  const [watchlist, setWatchlist] = useState([
-    "MSFT",
-    "AAPL",
-    "TSLA",
-    "PYPL",
-    "ELF",
-    "AMD",
-  ]);
+import { safeUser } from "@/types";
+import PageLayout from "../components/dashboardComp/pageLayout";
+
+interface DashboardProps {
+  user: safeUser;
+}
+
+export default async function Dashboard() {
+  const session = await getServerSession(authOptions);
+  const currentUser = await getUser();
+
+  // if (currentUser) {
+  //   const userWatchlist = await prisma.watchlist.findUnique({
+  //     where: { userId: currentUser.id },
+  //   });
+
+  //   console.log(userWatchlist);
+  // }
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className="flex flex-1 h-full">
-        <Sidebar />
-        <div className="flex flex-1 flex-col p-4 items-center justify-center bg-gray-300">
-          <h1 className="text-3xl">TEMPORARY WATCHLIST</h1>
-          <SearchBar watchlist={watchlist} setWatchlist={setWatchlist} />
-          <StockList watchlist={watchlist} setWatchlist={setWatchlist} />
-        </div>
-      </div>
-    </div>
+    <>
+      {currentUser ? (
+        <PageLayout user={currentUser} />
+      ) : (
+        <div>No user data</div>
+      )}
+    </>
   );
-};
-
-export default Dashboard;
+}
