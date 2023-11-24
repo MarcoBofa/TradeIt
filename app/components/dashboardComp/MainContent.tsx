@@ -41,7 +41,7 @@ const MainComponent: React.FC<DashboardProps> = ({ user }) => {
 
   return (
     <div className="flex flex-1 flex-col p-4 items-center justify-center bg-gray-300">
-      <h1 className="text-3xl">TEMPORARY WATCHLIST</h1>
+      <h1 className="text-3xl">WATCHLIST</h1>
       <SearchBar watchlist={watchlist} setWatchlist={setWatchlist} />
       <StockList watchlist={watchlist} setWatchlist={setWatchlist} />
     </div>

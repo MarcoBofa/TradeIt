@@ -4,6 +4,7 @@ import finnHub from "@/app/api/stocks/finnHub"; // Adjust path as needed
 import { watchlistProps } from "@/types";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { RingLoader } from "react-spinners";
 //import { useRouter } from "next/router";
 
 interface Result {
@@ -43,26 +44,7 @@ const SearchBar: React.FC<watchlistProps> = ({ watchlist, setWatchlist }) => {
       >
         {search && !results.length ? (
           <div className="absolute inset-0 flex justify-center items-center">
-            <svg
-              className="animate-spin h-5 w-5 text-gray-600"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M12 2C6.477 2 2 6.477 2 12c0 1.66.337 3.223.94 4.609l1.7-1.7a9 9 0 1 1 12.72 0l1.7 1.7c.603-1.386.94-3.05.94-4.609 0-5.523-4.477-10-10-10z"
-              ></path>
-            </svg>
+            <RingLoader color="#0A2E29" />
           </div>
         ) : (
           <ul className="absolute w-full bg-white shadow-md rounded mt-1">
