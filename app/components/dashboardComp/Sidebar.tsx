@@ -1,7 +1,5 @@
 "use client";
-import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { FaHome, FaChartLine, FaTrophy, FaUserCog } from "react-icons/fa";
 
 interface SidebarProps {
@@ -28,15 +26,15 @@ const Sidebar: React.FC<SidebarProps> = ({ activeContent, setContent }) => {
       </div>
       <div
         onClick={() => {
-          setActive("mystocks");
-          setContent("mystocks");
+          setActive("mycomp");
+          setContent("mycomp");
         }}
         className={`flex items-center p-4 rounded hover:bg-blue-700 ${
-          isActive === "mystocks" && "bg-blue-700"
+          isActive === "mycomp" && "bg-blue-700"
         }`}
       >
         <FaChartLine className="mr-4" size={20} />
-        My stocks
+        My Competitions
       </div>
       <div
         onClick={() => {

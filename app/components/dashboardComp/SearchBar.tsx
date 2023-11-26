@@ -18,6 +18,10 @@ const SearchBar: React.FC<watchlistProps> = ({ watchlist, setWatchlist }) => {
   //const router = useRouter();
 
   const addStock = (stock: string) => {
+    if (watchlist.find((item) => item === stock)) {
+      toast.error("Stock already in watchlist");
+      return;
+    }
     const updatedWatchlist = [...watchlist, stock];
     setWatchlist(updatedWatchlist);
 

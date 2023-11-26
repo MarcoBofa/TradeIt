@@ -23,6 +23,8 @@ model User {
   emailVerified DateTime?
   accounts Account[]
   watchlists Watchlist[]
+  competitionIds String[]
+  stockSelections  StockSelection[] // One-to-many relation to StockSelection
 }
 
 model Account {
@@ -52,3 +54,35 @@ model Watchlist {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
 }
+
+model Competition {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  startDate        DateTime
+  endDate          DateTime
+  stockSelections  StockSelection[] // One-to-many relation to StockSelection
+  // The list of participants is derived from the stockSelections relation
+
+}
+
+model StockSelection {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  competitionId  String        @db.ObjectId
+  userId         String        @db.ObjectId
+  selections     UserStock[]   // An array of UserStock to hold the selected stocks and their prices
+  competition    Competition   @relation(fields: [competitionId], references: [id])
+  user           User          @relation(fields: [userId], references: [id])
+}
+
+model UserStock {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  tickerSymbol     String    
+  initialPrice     Float
+  finalPrice       Float?    // This can be null and set at the end of the competition
+  stockSelection   StockSelection @relation(fields: [stockSelectionId], references: [id])
+  stockSelectionId String    @db.ObjectId
+
+}
+
+
+
+

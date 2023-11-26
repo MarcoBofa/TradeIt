@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 import { safeUser } from "@/types";
 import Leaderboard from "./LeaderBoard";
 import Settings from "./Settings";
-import MyStocks from "./MyStocks";
+import MyCompetition from "./MyCompetition";
 
 interface DashboardProps {
   user: safeUser;
@@ -17,8 +17,8 @@ const PageLayout: FC<DashboardProps> = ({ user }) => {
   let ContentComponent: JSX.Element;
 
   switch (activeContent) {
-    case "mystocks":
-      ContentComponent = <MyStocks />;
+    case "mycomp":
+      ContentComponent = <MyCompetition user={user} />;
       break;
     case "leaderboard":
       ContentComponent = <Leaderboard />;

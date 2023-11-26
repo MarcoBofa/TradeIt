@@ -26,7 +26,6 @@
         "react-hook-form": "^7.47.0",
         "react-hot-toast": "^2.4.1",
         "react-icons": "^4.11.0",
-        "react-spinners": "^0.13.8",
         "typescript": "5.2.2",
         "zustand": "^4.4.3"
       },
@@ -1911,9 +1910,9 @@
       }
     },
     "node_modules/electron-to-chromium": {
-      "version": "1.4.594",
-      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.594.tgz",
-      "integrity": "sha512-xT1HVAu5xFn7bDfkjGQi9dNpMqGchUkebwf1GL7cZN32NSwwlHRPMSDJ1KN6HkS0bWUtndbSQZqvpQftKG2uFQ=="
+      "version": "1.4.592",
+      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.592.tgz",
+      "integrity": "sha512-D3NOkROIlF+d5ixnz7pAf3Lu/AuWpd6AYgI9O67GQXMXTcCP1gJQRotOq35eQy5Sb4hez33XH1YdTtILA7Udww=="
     },
     "node_modules/emoji-regex": {
       "version": "9.2.2",
@@ -4795,15 +4794,6 @@
         "@popperjs/core": "^2.0.0",
         "react": "^16.8.0 || ^17 || ^18",
         "react-dom": "^16.8.0 || ^17 || ^18"
-      }
-    },
-    "node_modules/react-spinners": {
-      "version": "0.13.8",
-      "resolved": "https://registry.npmjs.org/react-spinners/-/react-spinners-0.13.8.tgz",
-      "integrity": "sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA==",
-      "peerDependencies": {
-        "react": "^16.0.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0"
       }
     },
     "node_modules/read-cache": {
