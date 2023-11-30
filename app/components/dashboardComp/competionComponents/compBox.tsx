@@ -49,7 +49,11 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
     },
   ]);
 
-  const fetchPrice = async (symbol: string) => {
+  const fetchPrice = async (
+    symbol: string,
+    retries = 3,
+    backoff = 2000
+  ): Promise<number | null> => {
     try {
       const response = await finnHub.get("/quote", {
         params: {
@@ -59,7 +63,11 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
       return response.data.c; // Assuming 'c' is the current price field
     } catch (error) {
       console.error("Error fetching price for symbol:", symbol, error);
-      return null; // Handle error appropriately, null is just a placeholder
+      if (retries > 0) {
+        await new Promise((resolve) => setTimeout(resolve, backoff));
+        return fetchPrice(symbol, retries - 1, backoff * 2);
+      }
+      return null; // After all retries, if it still fails, return null
     }
   };
 
