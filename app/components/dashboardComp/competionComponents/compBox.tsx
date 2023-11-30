@@ -101,8 +101,9 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
     };
 
     const fetchOldCompetition = async () => {
-      if (participating) {
+      if (compData.isEnrolled) {
         const compId = compData.id;
+        console.log("compId", compId);
         try {
           const response = await fetch(`/api/getUserOldComp?id=${compId}`);
           if (!response.ok) {
@@ -110,6 +111,7 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
           }
           const data = await response.json();
           if (data.oldCompStocks && Array.isArray(data.oldCompStocks)) {
+            console.log("old comp stocks", data);
             setOldCompStocks(data.oldCompStocks);
           } else {
             throw new Error(
