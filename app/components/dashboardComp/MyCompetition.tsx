@@ -22,7 +22,11 @@ interface OldCompetitionData {
 
 const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
   const [oldComps, setOldComps] = useState<OldCompetitionData[]>([]);
-  const [competition, setCompetition] = useState<CompetitionData | null>(null);
+  const [competition, setCompetition] = useState<CompetitionData>({
+    id: "",
+    startDate: "",
+    endDate: "",
+  });
   const [participating, setParticipating] = useState<boolean>(false);
 
   useEffect(() => {
