@@ -59,7 +59,6 @@ export async function DELETE(request: NextApiRequest) {
   }
 
   const { symbol } = request.query; // Access the symbol from the query parameters
-  console.log(symbol);
 
   try {
     const userWatchlist = await prisma.watchlist.findUnique({

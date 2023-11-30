@@ -19,11 +19,12 @@ model User {
   role      String   @default("user")
   createdAt DateTime @default(now()) 
   updatedAt DateTime @updatedAt
-  hashedPassword String? //optiona for allowing social login
+  hashedPassword String? //optional for allowing social login
   emailVerified DateTime?
   accounts Account[]
   watchlists Watchlist[]
   competitionIds String[]
+  points Int @default(0)
   stockSelections  StockSelection[] // One-to-many relation to StockSelection
 }
 
@@ -59,6 +60,7 @@ model Competition {
   id               String           @id @default(auto()) @map("_id") @db.ObjectId
   startDate        DateTime
   endDate          DateTime
+  status           Boolean           @default(false)
   stockSelections  StockSelection[] // One-to-many relation to StockSelection
   // The list of participants is derived from the stockSelections relation
 
@@ -68,6 +70,8 @@ model StockSelection {
   id             String        @id @default(auto()) @map("_id") @db.ObjectId
   competitionId  String        @db.ObjectId
   userId         String        @db.ObjectId
+  avgChange       Float         @default(0.0)
+  rank            Int           @default(0)
   selections     UserStock[]   // An array of UserStock to hold the selected stocks and their prices
   competition    Competition   @relation(fields: [competitionId], references: [id])
   user           User          @relation(fields: [userId], references: [id])
@@ -80,8 +84,8 @@ model UserStock {
   finalPrice       Float?    // This can be null and set at the end of the competition
   stockSelection   StockSelection @relation(fields: [stockSelectionId], references: [id])
   stockSelectionId String    @db.ObjectId
-
 }
+
 
 
 

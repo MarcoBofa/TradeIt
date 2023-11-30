@@ -13,6 +13,7 @@ export async function POST(req, res) {
       data: {
         startDate,
         endDate,
+        status: true,
         // other fields
       },
     });

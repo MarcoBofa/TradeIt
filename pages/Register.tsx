@@ -57,7 +57,9 @@ const Register: React.FC = () => {
         router.push("/Login");
       })
       .catch((error) => {
-        toast.error(error);
+        // Check if the server responded with a message, otherwise use a default message
+        const message = error.response?.data?.error || "An error occurred!";
+        toast.error(message);
       });
 
     console.log(data);

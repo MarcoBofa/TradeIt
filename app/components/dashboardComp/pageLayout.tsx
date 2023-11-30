@@ -21,7 +21,7 @@ const PageLayout: FC<DashboardProps> = ({ user }) => {
       ContentComponent = <MyCompetition user={user} />;
       break;
     case "leaderboard":
-      ContentComponent = <Leaderboard />;
+      ContentComponent = <Leaderboard user={user} />;
       break;
     case "settings":
       ContentComponent = <Settings />;

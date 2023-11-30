@@ -31,7 +31,8 @@
     ".next/types/**/*.ts",
     "_next/types/**/*.ts",
     "app/api/getCurrentComp/route.js",
-    "app/api/createComp/route.js"
+    "app/api/createComp/route.js",
+    "app/api/closeComp/route.js"
   ],
   "exclude": ["node_modules"]
 }

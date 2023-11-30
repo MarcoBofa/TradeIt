@@ -11,7 +11,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeContent, setContent }) => {
   const [isActive, setActive] = useState<string>(activeContent);
 
   return (
-    <div className="flex flex-col h-screen w-64 bg-blue-900 text-white">
+    <div className="flex flex-col h-100 w-64 bg-blue-900 text-white">
       <div
         onClick={() => {
           setActive("dashboard");

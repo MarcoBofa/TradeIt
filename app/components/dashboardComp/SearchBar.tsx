@@ -5,6 +5,7 @@ import { watchlistProps } from "@/types";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { RingLoader } from "react-spinners";
+import { set } from "react-hook-form";
 //import { useRouter } from "next/router";
 
 interface Result {
@@ -22,6 +23,12 @@ const SearchBar: React.FC<watchlistProps> = ({ watchlist, setWatchlist }) => {
       toast.error("Stock already in watchlist");
       return;
     }
+
+    if (stock.includes(".")) {
+      toast.error("Stock symbols with a period are not allowed");
+      return;
+    }
+
     const updatedWatchlist = [...watchlist, stock];
     setWatchlist(updatedWatchlist);
 

@@ -25,9 +25,7 @@ const Navbar: React.FC<navbarPros> = ({ currentUser }) => {
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             <span className="ml-2">
-              {currentUser
-                ? `${currentUser.name} - ${currentUser.role}`
-                : "Login"}
+              {currentUser ? `${currentUser.name}` : "Login"}
             </span>
             <div style={{ marginRight: "-8px" }}>
               <Hamburger

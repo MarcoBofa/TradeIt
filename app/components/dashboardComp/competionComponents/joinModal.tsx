@@ -2,6 +2,7 @@
 import finnHub from "@/app/api/stocks/finnHub";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 import toast from "react-hot-toast";
 import { RingLoader } from "react-spinners";
 
@@ -124,6 +125,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, competition }) => {
         toast.success("Competition Joined! Good Luck!");
         closeModal();
         setSearch("");
+        window.location.reload();
       })
       .catch((error) => {
         toast.error(error.message);
