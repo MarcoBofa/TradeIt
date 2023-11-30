@@ -33,6 +33,7 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
           throw new Error("Error fetching competition data");
         }
         const data = await response.json();
+        console.log("newww commmmps", data);
         setCompetition(data.response.competition);
         setParticipating(data.response.isEnrolled);
       } catch (error) {
