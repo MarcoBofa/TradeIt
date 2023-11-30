@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -7,11 +7,15 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import prisma from "@/app/libs/prismadb";
 
-export const authOptions = {
+interface ExtendedUser extends User {
+  role: string;
+}
+
+export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
-      profile(profile) {
+      profile(profile: any) {
         let userRole = "user";
 
         if (profile?.email === process.env.ADMIN_EMAIL) {
@@ -28,16 +32,16 @@ export const authOptions = {
       },
       clientId:
         process.env.NODE_ENV === "development"
-          ? process.env.GITHUB_ID_DEV
-          : process.env.GITHUB_ID,
+          ? (process.env.GITHUB_ID_DEV as string)
+          : (process.env.GITHUB_ID as string),
       clientSecret:
         process.env.NODE_ENV === "development"
-          ? process.env.GITHUB_SECRET_DEV
-          : process.env.GITHUB_SECRET,
+          ? (process.env.GITHUB_SECRET_DEV as string)
+          : (process.env.GITHUB_SECRET as string),
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
     CredentialsProvider({
       name: "credentials",
@@ -75,11 +79,18 @@ export const authOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = user.role;
+      if (user) {
+        // Cast user to the extended type
+        const extendedUser = user as ExtendedUser;
+        token.role = extendedUser.role;
+      }
       return token;
     },
     async session({ session, token }) {
-      if (session?.user) session.user.role = token.role;
+      if (session?.user) {
+        // Extend the session's user type
+        (session.user as ExtendedUser).role = token.role as string;
+      }
       return session;
     },
   },
