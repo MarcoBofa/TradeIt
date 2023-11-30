@@ -4,10 +4,8 @@ import getUser from "../actions/getUser";
 
 import { safeUser } from "@/types";
 import PageLayout from "../components/dashboardComp/pageLayout";
-
-interface DashboardProps {
-  user: safeUser;
-}
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default async function Dashboard() {
   const currentUser = await getUser();
@@ -25,7 +23,14 @@ export default async function Dashboard() {
       {currentUser ? (
         <PageLayout user={currentUser} />
       ) : (
-        <div>No user data</div>
+        <div className="flex items-center justify-center min-h-screen">
+          <Link
+            className="text-3xl hover:text-red-700 dark:text-red-500 hover:underline"
+            href="/Login"
+          >
+            LOGIN to see Dashboard
+          </Link>
+        </div>
       )}
     </>
   );

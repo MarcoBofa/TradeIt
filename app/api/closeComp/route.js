@@ -38,6 +38,7 @@ export async function POST(req, res) {
         { status: 404 }
       );
     }
+    console.log("Competition to close:", competitionToClose);
 
     await prisma.competition.update({
       where: { id: competitionToClose.id },
@@ -94,6 +95,18 @@ export async function POST(req, res) {
 
     const pointAwards = [10, 6, 4, 2, 2]; // Points for 1st, 2nd, 3rd, 4th, 5th positions
 
+    const updateDb = results.map((result, index) => {
+      return prisma.stockSelection.update({
+        where: { id: result.sId, userId: result.userId },
+        data: {
+          avgChange: result.avg,
+          rank: index + 1,
+        },
+      });
+    });
+
+    await Promise.all(updateDb);
+
     for (let i = 0; i < results.length; i++) {
       const userId = results[i].userId;
       let points = 0;
@@ -114,18 +127,6 @@ export async function POST(req, res) {
     }
 
     console.log("Results:", results);
-
-    const updateDb = results.map((result, index) => {
-      return prisma.stockSelection.update({
-        where: { id: result.sId, userId: result.userId },
-        data: {
-          avgChange: result.avg,
-          rank: index + 1,
-        },
-      });
-    });
-
-    await Promise.all(updateDb);
 
     //console.log("Results:", updateDb);
 
