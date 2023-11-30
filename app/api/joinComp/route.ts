@@ -34,6 +34,19 @@ export async function POST(request: Request) {
     const { data } = body;
     const { compData, stocks } = data;
 
+    const present = await prisma.stockSelection.findFirst({
+      where: {
+        competitionId: compData.id,
+        userId: currentUser.id,
+      },
+    });
+
+    if (present) {
+      return NextResponse.json(
+        { error: "You have already joined this competition" },
+        { status: 400 }
+      );
+    }
     const prices = await Promise.all(
       stocks.map((stockSymbol: string) => fetchPrice(stockSymbol))
     );

@@ -43,6 +43,7 @@ const OldcompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
   useEffect(() => {
     const endDate = new Date(compData.endDate);
     const now = new Date();
+    setParticipating(compData.isEnrolled);
 
     const fetchOldCompetition = async () => {
       if (compData.isEnrolled) {

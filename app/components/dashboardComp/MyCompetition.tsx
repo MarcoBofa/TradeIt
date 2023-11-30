@@ -73,12 +73,12 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
       <h1 className="text-3xl font-bold mb-10">Current Ongoing Competition</h1>
       {competition && <CompBox user={user} compData={competition} />}
       <h1 className="text-3xl font-bold mb-10">Past competitions</h1>
-      <div className="flex flex-row items-center justify-center p-4 bg-gray-300 w-full">
+      <div className="flex flex-row items-center justify-start overflow-x-auto p-4 bg-gray-300 w-full space-x-10">
         {oldComps.length > 0 ? (
           oldComps.map((comp) => (
             <div
               key={comp.id}
-              className="flex items-center justify-center mr-10"
+              className="flex-none" // flex-none prevents the boxes from shrinking
             >
               <OldcompBox
                 user={user}
@@ -87,9 +87,9 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
             </div>
           ))
         ) : (
-          <p className="flex justify-center mt-10 text-2xl text-red-500 bg-red-200 w-[700px]">
+          <p className="text-2xl text-red-500 bg-red-200 w-full text-center">
             No past competitions found.
-          </p> // Or any other fallback component or null if you don't want to render anything
+          </p>
         )}
       </div>
     </div>
