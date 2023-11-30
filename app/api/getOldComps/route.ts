@@ -23,8 +23,6 @@ export async function GET(request: Request) {
       },
     });
 
-    console.log("past comps", pastCompetitions);
-
     const comps = await Promise.all(
       pastCompetitions.map(async (competition) => {
         const participation = await prisma.stockSelection.findFirst({

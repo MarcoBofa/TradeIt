@@ -10,13 +10,13 @@ import { StockSelection } from "@prisma/client";
 interface competition {
   id: string;
   startDate: string; // or Date, depending on how you're receiving it
-  endDate: string; // or Date
-  isEnrolled: boolean;
+  endDate: string; // or Dat
 }
 
 interface CompetitionData {
   competition: competition;
-  compStocks: StockSelection[];
+  isEnrolled: boolean;
+  stockSelections: StockSelection[];
 }
 
 interface CompBoxProps {
@@ -30,30 +30,12 @@ interface currentCompStocks {
   currentPrice?: number;
 }
 
-interface oldCompStocks {
-  ticker: string;
-  initialPrice: number;
-  closingPrice: number;
-  rank: number;
-  avgChange: number;
-}
-
 const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
-  const [participating, setParticipating] = useState<boolean>(false);
+  const [participating, setParticipating] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [oldComp, setOldComp] = useState<boolean>(false);
   const [userEntryStocks, setUserEntryStocks] = useState<currentCompStocks[]>(
     []
   );
-  const [oldCompStocks, setOldCompStocks] = useState<oldCompStocks[]>([
-    {
-      ticker: "",
-      initialPrice: 0,
-      closingPrice: 0,
-      rank: 0,
-      avgChange: 0,
-    },
-  ]);
 
   const fetchPrice = async (
     symbol: string,
@@ -78,36 +60,23 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
   };
 
   useEffect(() => {
-    const endDate = new Date(compData.competition.endDate);
-    const now = new Date();
-    setOldComp(endDate < now);
-
-    setParticipating(compData.competition.isEnrolled);
-
+    setParticipating(compData.isEnrolled);
     const fetchCompetition = async () => {
       try {
         if (participating) {
           const compId = compData.competition.id;
-          // const compStocksResponse = await fetch(
-          //   `/api/getCompStock?id=${compId}`
-          // );
-          // if (!compStocksResponse.ok) {
-          //   throw new Error("Error fetching competition stocks");
-          // }
-          //const compStocksData = await compStocksResponse.json();
           const prices = await Promise.all(
-            compData.compStocks.map((stock: any) =>
+            compData.stockSelections.map((stock: any) =>
               fetchPrice(stock.tickerSymbol)
             )
           );
-          const currentCompStocks = compData.compStocks.map(
+          const currentCompStocks = compData.stockSelections.map(
             (stock: any, index: number) => ({
               ticker: stock.tickerSymbol,
               buyPrice: stock.initialPrice,
               currentPrice: prices[index] || 0,
             })
           );
-          console.log("current comp stocks", currentCompStocks);
           setUserEntryStocks(currentCompStocks);
         }
       } catch (error) {
@@ -115,35 +84,7 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
       }
     };
 
-    const fetchOldCompetition = async () => {
-      if (compData.competition.isEnrolled) {
-        const compId = compData.competition.id;
-        console.log("compId", compId);
-        try {
-          const response = await fetch(`/api/getUserOldComp?id=${compId}`);
-          if (!response.ok) {
-            throw new Error("Error fetching competition stocks");
-          }
-          const data = await response.json();
-          if (data.oldCompStocks && Array.isArray(data.oldCompStocks)) {
-            console.log("old comp stocks", data);
-            setOldCompStocks(data.oldCompStocks);
-          } else {
-            throw new Error(
-              "Invalid data structure for old competition stocks"
-            );
-          }
-        } catch (error) {
-          console.error("Fetch error:", error);
-        }
-      }
-    };
-
-    if (oldComp) {
-      fetchOldCompetition();
-    } else {
-      fetchCompetition();
-    }
+    fetchCompetition();
   }, [compData]);
 
   const openModal = () => setIsModalOpen(true);
@@ -181,100 +122,49 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
       <p className="mb-10">
         <strong>End Date:</strong> {formatDate(compData.competition.endDate)}
       </p>
-
-      {oldComp ? (
+      {participating ? (
         <>
-          <p
-            className={`${
-              participating ? "text-green-500" : "text-red-500"
-            } font-semibold mb-4`}
-          >
-            {participating
-              ? `Congrats! you positioned ${oldCompStocks[0].rank}!`
-              : "Did not participate"}
+          <p className="text-green-500 font-semibold mb-4">
+            You are participating!
           </p>
-          {participating && (
-            <>
-              <h3 className="text-xl font-semibold mb-2">Your Stocks:</h3>
-              <div className="w-full">
-                {oldCompStocks.map((stock, index) => (
-                  <div
-                    key={stock.ticker}
-                    className="flex justify-between items-center border-b-2 py-2"
-                  >
-                    <span className="font-medium">{stock.ticker}</span>
-                    <span>{stock.initialPrice.toFixed(2)}</span>
-                    <span>
-                      {stock.closingPrice
-                        ? stock.closingPrice.toFixed(2)
-                        : "Loading..."}
-                    </span>
-                    <span>
-                      {stock.initialPrice
-                        ? (
-                            ((stock.closingPrice - stock.initialPrice) /
-                              stock.initialPrice) *
-                            100
-                          ).toFixed(2) + "%"
-                        : "Calculating..."}
-                    </span>
-                  </div>
-                ))}
-                <div className="mt-4">
-                  <strong>Average Percentage Change:</strong>{" "}
-                  {oldCompStocks[0].avgChange.toFixed(2)}%
-                </div>
+          <h3 className="text-xl font-semibold mb-2">Your Stocks:</h3>
+          <div className="w-full">
+            {userEntryStocks.map((stock, index) => (
+              <div
+                key={index}
+                className="flex justify-between items-center border-b-2 py-2"
+              >
+                <span className="font-medium">{stock.ticker}</span>
+                <span>{stock.buyPrice.toFixed(2)}</span>
+                <span>
+                  {stock.currentPrice
+                    ? stock.currentPrice.toFixed(2)
+                    : "Loading..."}
+                </span>
+                <span>
+                  {stock.currentPrice
+                    ? (
+                        ((stock.currentPrice - stock.buyPrice) /
+                          stock.buyPrice) *
+                        100
+                      ).toFixed(2) + "%"
+                    : "Calculating..."}
+                </span>
               </div>
-            </>
-          )}
+            ))}
+            <div className="mt-4">
+              <strong>Average Percentage Change:</strong>{" "}
+              {calculateTotalPercentageChange()}%
+            </div>
+          </div>
         </>
       ) : (
-        <>
-          {participating ? (
-            <>
-              <p className="text-green-500 font-semibold mb-4">
-                You are participating!
-              </p>
-              <h3 className="text-xl font-semibold mb-2">Your Stocks:</h3>
-              <div className="w-full">
-                {userEntryStocks.map((stock, index) => (
-                  <div
-                    key={index}
-                    className="flex justify-between items-center border-b-2 py-2"
-                  >
-                    <span className="font-medium">{stock.ticker}</span>
-                    <span>{stock.buyPrice.toFixed(2)}</span>
-                    <span>
-                      {stock.currentPrice
-                        ? stock.currentPrice.toFixed(2)
-                        : "Loading..."}
-                    </span>
-                    <span>
-                      {stock.currentPrice
-                        ? (
-                            ((stock.currentPrice - stock.buyPrice) /
-                              stock.buyPrice) *
-                            100
-                          ).toFixed(2) + "%"
-                        : "Calculating..."}
-                    </span>
-                  </div>
-                ))}
-                <div className="mt-4">
-                  <strong>Average Percentage Change:</strong>{" "}
-                  {calculateTotalPercentageChange()}%
-                </div>
-              </div>
-            </>
-          ) : (
-            <button
-              onClick={openModal}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Click to Join!
-            </button>
-          )}
-        </>
+        <button
+          onClick={openModal}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Click to Join!
+        </button>
       )}
 
       {isModalOpen && (

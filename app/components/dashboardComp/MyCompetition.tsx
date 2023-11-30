@@ -4,6 +4,7 @@ import "../../globals.css";
 import React, { use, useEffect, useState } from "react";
 import CompBox from "./competionComponents/compBox";
 import { StockSelection } from "@prisma/client";
+import OldcompBox from "./competionComponents/oldcompBox";
 
 interface DashboardProps {
   user: safeUser;
@@ -13,12 +14,12 @@ interface competition {
   id: string;
   startDate: string; // or Date, depending on how you're receiving it
   endDate: string; // or Date
-  isEnrolled: boolean;
 }
 
 interface CompetitionData {
   competition: competition;
-  compStocks: StockSelection[];
+  isEnrolled: boolean;
+  stockSelections: StockSelection[];
 }
 
 interface OldCompetitionData {
@@ -29,7 +30,7 @@ interface OldCompetitionData {
 }
 
 const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
-  const [oldComps, setOldComps] = useState<CompetitionData[]>([]);
+  const [oldComps, setOldComps] = useState<OldCompetitionData[]>([]);
   const [competition, setCompetition] = useState<CompetitionData>();
   const [participating, setParticipating] = useState<boolean>(false);
 
@@ -56,19 +57,8 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
         }
 
         const data = await response.json();
-        const convertedData: CompetitionData[] = data.comps.map(
-          (comp: OldCompetitionData) => ({
-            competition: {
-              id: comp.id,
-              startDate: comp.startDate,
-              endDate: comp.endDate,
-              isEnrolled: comp.participates,
-            },
-            compStocks: [], // This assumes that you want an empty array for compStocks
-          })
-        );
-        console.log("old commmmps", convertedData);
-        setOldComps(convertedData);
+        setOldComps(data.comps);
+        console.log("old commmmps", data.comps);
       } catch (error) {
         console.error("Fetch error:", error);
       }
@@ -87,10 +77,13 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
         {oldComps.length > 0 ? (
           oldComps.map((comp) => (
             <div
-              key={comp.competition.id}
+              key={comp.id}
               className="flex items-center justify-center mr-10"
             >
-              <CompBox user={user} compData={comp} />
+              <OldcompBox
+                user={user}
+                compData={{ ...comp, isEnrolled: comp.participates }}
+              />
             </div>
           ))
         ) : (

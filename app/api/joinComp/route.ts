@@ -33,8 +33,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { data } = body;
     const { compData, stocks } = data;
-    //console.log(stocks);
-    //console.log(compData);
 
     const prices = await Promise.all(
       stocks.map((stockSymbol: string) => fetchPrice(stockSymbol))
@@ -52,6 +50,9 @@ export async function POST(request: Request) {
         selections: {
           create: selections,
         },
+      },
+      include: {
+        selections: true, // This will return the nested UserStocks if they are created
       },
     });
 

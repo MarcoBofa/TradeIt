@@ -38,7 +38,6 @@ export async function POST(req, res) {
         { status: 404 }
       );
     }
-    console.log("Competition to close:", competitionToClose);
 
     await prisma.competition.update({
       where: { id: competitionToClose.id },
