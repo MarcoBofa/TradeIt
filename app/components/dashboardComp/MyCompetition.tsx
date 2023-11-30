@@ -47,6 +47,7 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
           throw new Error("Error fetching Old competition data");
         }
         const data = await response.json();
+        console.log("old commmmps", data);
         setOldComps(data.comps);
       } catch (error) {
         console.error("Fetch error:", error);
