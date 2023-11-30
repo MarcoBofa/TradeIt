@@ -54,6 +54,7 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
         if (!response.ok) {
           throw new Error("Error fetching Old competition data");
         }
+
         const data = await response.json();
         const convertedData: CompetitionData[] = data.comps.map(
           (comp: OldCompetitionData) => ({
@@ -66,6 +67,7 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
             compStocks: [], // This assumes that you want an empty array for compStocks
           })
         );
+        console.log("old commmmps", convertedData);
         setOldComps(convertedData);
       } catch (error) {
         console.error("Fetch error:", error);
