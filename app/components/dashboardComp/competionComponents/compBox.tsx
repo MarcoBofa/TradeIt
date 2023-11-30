@@ -5,12 +5,18 @@ import React, { use, useEffect, useState } from "react";
 import finnHub from "@/app/api/stocks/finnHub";
 import Modal from "./joinModal";
 import { Stoke } from "next/font/google";
+import { StockSelection } from "@prisma/client";
 
-interface CompetitionData {
+interface competition {
   id: string;
   startDate: string; // or Date, depending on how you're receiving it
   endDate: string; // or Date
   isEnrolled: boolean;
+}
+
+interface CompetitionData {
+  competition: competition;
+  compStocks: StockSelection[];
 }
 
 interface CompBoxProps {
@@ -72,35 +78,36 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
   };
 
   useEffect(() => {
-    const endDate = new Date(compData.endDate);
+    const endDate = new Date(compData.competition.endDate);
     const now = new Date();
     setOldComp(endDate < now);
 
-    setParticipating(compData.isEnrolled);
+    setParticipating(compData.competition.isEnrolled);
 
     const fetchCompetition = async () => {
       try {
         if (participating) {
-          const compId = compData.id;
-          const compStocksResponse = await fetch(
-            `/api/getCompStock?id=${compId}`
-          );
-          if (!compStocksResponse.ok) {
-            throw new Error("Error fetching competition stocks");
-          }
-          const compStocksData = await compStocksResponse.json();
+          const compId = compData.competition.id;
+          // const compStocksResponse = await fetch(
+          //   `/api/getCompStock?id=${compId}`
+          // );
+          // if (!compStocksResponse.ok) {
+          //   throw new Error("Error fetching competition stocks");
+          // }
+          //const compStocksData = await compStocksResponse.json();
           const prices = await Promise.all(
-            compStocksData.userStocks[0].selections.map((stock: any) =>
+            compData.compStocks.map((stock: any) =>
               fetchPrice(stock.tickerSymbol)
             )
           );
-          const currentCompStocks = compStocksData.userStocks[0].selections.map(
+          const currentCompStocks = compData.compStocks.map(
             (stock: any, index: number) => ({
               ticker: stock.tickerSymbol,
               buyPrice: stock.initialPrice,
-              currentPrice: prices[index],
+              currentPrice: prices[index] || 0,
             })
           );
+          console.log("current comp stocks", currentCompStocks);
           setUserEntryStocks(currentCompStocks);
         }
       } catch (error) {
@@ -109,8 +116,8 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
     };
 
     const fetchOldCompetition = async () => {
-      if (compData.isEnrolled) {
-        const compId = compData.id;
+      if (compData.competition.isEnrolled) {
+        const compId = compData.competition.id;
         console.log("compId", compId);
         try {
           const response = await fetch(`/api/getUserOldComp?id=${compId}`);
@@ -168,10 +175,11 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
     <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6 pl-20 pr-20 mb-10">
       <h2 className="text-2xl font-semibold mb-10">Competition Details</h2>
       <p className="mb-4">
-        <strong>Start Date:</strong> {formatDate(compData.startDate)}
+        <strong>Start Date:</strong>{" "}
+        {formatDate(compData.competition.startDate)}
       </p>
       <p className="mb-10">
-        <strong>End Date:</strong> {formatDate(compData.endDate)}
+        <strong>End Date:</strong> {formatDate(compData.competition.endDate)}
       </p>
 
       {oldComp ? (
@@ -273,7 +281,7 @@ const CompBox: React.FC<CompBoxProps> = ({ user, compData }) => {
         <Modal
           isOpen={isModalOpen}
           closeModal={closeModal}
-          competition={compData}
+          competition={compData.competition}
         />
       )}
     </div>

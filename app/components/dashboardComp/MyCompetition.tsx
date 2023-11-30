@@ -3,16 +3,24 @@ import { safeUser } from "@/types";
 import "../../globals.css";
 import React, { use, useEffect, useState } from "react";
 import CompBox from "./competionComponents/compBox";
+import { StockSelection } from "@prisma/client";
 
 interface DashboardProps {
   user: safeUser;
 }
 
-interface CompetitionData {
+interface competition {
   id: string;
   startDate: string; // or Date, depending on how you're receiving it
   endDate: string; // or Date
+  isEnrolled: boolean;
 }
+
+interface CompetitionData {
+  competition: competition;
+  compStocks: StockSelection[];
+}
+
 interface OldCompetitionData {
   id: string;
   startDate: string; // or Date, depending on how you're receiving it
@@ -21,12 +29,8 @@ interface OldCompetitionData {
 }
 
 const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
-  const [oldComps, setOldComps] = useState<OldCompetitionData[]>([]);
-  const [competition, setCompetition] = useState<CompetitionData>({
-    id: "",
-    startDate: "",
-    endDate: "",
-  });
+  const [oldComps, setOldComps] = useState<CompetitionData[]>([]);
+  const [competition, setCompetition] = useState<CompetitionData>();
   const [participating, setParticipating] = useState<boolean>(false);
 
   useEffect(() => {
@@ -38,8 +42,7 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
         }
         const data = await response.json();
         console.log("newww commmmps", data);
-        setCompetition(data.response.competition);
-        setParticipating(data.response.isEnrolled);
+        setCompetition(data.response);
       } catch (error) {
         console.error("Fetch error:", error);
       }
@@ -52,8 +55,18 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
           throw new Error("Error fetching Old competition data");
         }
         const data = await response.json();
-        console.log("old commmmps", data);
-        setOldComps(data.comps);
+        const convertedData: CompetitionData[] = data.comps.map(
+          (comp: OldCompetitionData) => ({
+            competition: {
+              id: comp.id,
+              startDate: comp.startDate,
+              endDate: comp.endDate,
+              isEnrolled: comp.participates,
+            },
+            compStocks: [], // This assumes that you want an empty array for compStocks
+          })
+        );
+        setOldComps(convertedData);
       } catch (error) {
         console.error("Fetch error:", error);
       }
@@ -66,24 +79,16 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
   return (
     <div className="flex flex-col items-center p-4 bg-gray-200 w-full">
       <h1 className="text-3xl font-bold mb-10">Current Ongoing Competition</h1>
-      {competition && (
-        <CompBox
-          user={user}
-          compData={{ ...competition, isEnrolled: participating }}
-        />
-      )}
+      {competition && <CompBox user={user} compData={competition} />}
       <h1 className="text-3xl font-bold mb-10">Past competitions</h1>
       <div className="flex flex-row items-center justify-center p-4 bg-gray-300 w-full">
         {oldComps.length > 0 ? (
           oldComps.map((comp) => (
             <div
-              key={comp.id}
+              key={comp.competition.id}
               className="flex items-center justify-center mr-10"
             >
-              <CompBox
-                user={user}
-                compData={{ ...comp, isEnrolled: comp.participates }}
-              />
+              <CompBox user={user} compData={comp} />
             </div>
           ))
         ) : (
