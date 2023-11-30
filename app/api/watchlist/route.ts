@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import getUser from "@/app/actions/getUser";
 import prisma from "@/app/libs/prismadb";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const currentUser = await getUser();
@@ -52,51 +52,51 @@ export async function POST(request: Request) {
     );
   }
 }
-export async function DELETE(request: NextApiRequest) {
-  const currentUser = await getUser();
-  if (!currentUser) {
-    return NextResponse.json({ error: "Not authorized" }, { status: 401 });
-  }
+// export async function DELETE(request: NextRequest) {
+//   const currentUser = await getUser();
+//   if (!currentUser) {
+//     return NextResponse.json({ error: "Not authorized" }, { status: 401 });
+//   }
 
-  const { symbol } = request.query; // Access the symbol from the query parameters
+//   const { symbol } = request.query; // Access the symbol from the query parameters
 
-  try {
-    const userWatchlist = await prisma.watchlist.findUnique({
-      where: { userId: currentUser.id },
-    });
+//   try {
+//     const userWatchlist = await prisma.watchlist.findUnique({
+//       where: { userId: currentUser.id },
+//     });
 
-    //console.log(userWatchlist);
-    if (userWatchlist) {
-      const updatedWatchlist = userWatchlist.stockSymbols.filter(
-        (s) => s !== symbol
-      );
-      //console.log(updatedWatchlist);
-      const result = await prisma.watchlist.upsert({
-        where: {
-          userId: currentUser.id,
-        },
-        update: {
-          stockSymbols: updatedWatchlist,
-        },
-        create: {
-          userId: currentUser.id,
-          stockSymbols: updatedWatchlist,
-        },
-      });
-      return NextResponse.json(
-        { success: "Removed from Watchlist!" },
-        { status: 200 }
-      );
-    } else {
-      return NextResponse.json(
-        { error: "Watchlist not found" },
-        { status: 404 }
-      );
-    }
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Error removing stock" },
-      { status: 500 }
-    );
-  }
-}
+//     //console.log(userWatchlist);
+//     if (userWatchlist) {
+//       const updatedWatchlist = userWatchlist.stockSymbols.filter(
+//         (s) => s !== symbol
+//       );
+//       //console.log(updatedWatchlist);
+//       const result = await prisma.watchlist.upsert({
+//         where: {
+//           userId: currentUser.id,
+//         },
+//         update: {
+//           stockSymbols: updatedWatchlist,
+//         },
+//         create: {
+//           userId: currentUser.id,
+//           stockSymbols: updatedWatchlist,
+//         },
+//       });
+//       return NextResponse.json(
+//         { success: "Removed from Watchlist!" },
+//         { status: 200 }
+//       );
+//     } else {
+//       return NextResponse.json(
+//         { error: "Watchlist not found" },
+//         { status: 404 }
+//       );
+//     }
+//   } catch (error) {
+//     return NextResponse.json(
+//       { error: "Error removing stock" },
+//       { status: 500 }
+//     );
+//   }
+// }
