@@ -7,11 +7,11 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import prisma from "@/app/libs/prismadb";
 
-export const authOptions: AuthOptions = {
+export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
-      profile(profile: any) {
+      profile(profile) {
         let userRole = "user";
 
         if (profile?.email === process.env.ADMIN_EMAIL) {
@@ -28,16 +28,16 @@ export const authOptions: AuthOptions = {
       },
       clientId:
         process.env.NODE_ENV === "development"
-          ? (process.env.GITHUB_ID_DEV as string)
-          : (process.env.GITHUB_ID as string),
+          ? process.env.GITHUB_ID_DEV
+          : process.env.GITHUB_ID,
       clientSecret:
         process.env.NODE_ENV === "development"
-          ? (process.env.GITHUB_SECRET_DEV as string)
-          : (process.env.GITHUB_SECRET as string),
+          ? process.env.GITHUB_SECRET_DEV
+          : process.env.GITHUB_SECRET,
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     CredentialsProvider({
       name: "credentials",

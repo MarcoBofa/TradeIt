@@ -32,7 +32,8 @@
     "_next/types/**/*.ts",
     "app/api/getCurrentComp/route.js",
     "app/api/createComp/route.js",
-    "app/api/closeComp/route.js"
+    "app/api/closeComp/route.js",
+    "pages/api/auth/[...nextauth].js"
   ],
   "exclude": ["node_modules"]
 }
