@@ -14,7 +14,7 @@ const Navbar: React.FC<navbarPros> = ({ currentUser }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
-    <div className="bg-gray-900 text-white py-4 px-6">
+    <div className="bg-gray-900 text-white py-4 px-6 w-full">
       <div className="mx-auto flex justify-between items-center">
         <Link href="/">
           <div className="text-2xl font-bold">TradeIt</div>
