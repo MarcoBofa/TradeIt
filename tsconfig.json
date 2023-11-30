@@ -33,7 +33,8 @@
     "app/api/getCurrentComp/route.js",
     "app/api/createComp/route.js",
     "app/api/closeComp/route.js",
-    "pages/api/auth/[...nextauth].js"
+    "pages/api/auth/[...nextauth].js",
+    "app/actions/getUser.js"
   ],
   "exclude": ["node_modules"]
 }
