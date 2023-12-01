@@ -39,7 +39,15 @@ const Navbar: React.FC<navbarPros> = ({ currentUser }) => {
             <div className="absolute right-0 mt-2 w-48 py-2 bg-gray-900 text-white rounded shadow-xl">
               {currentUser ? (
                 <>
-                  <a className="block px-4 py-2 hover:bg-gray-800">Profile</a>
+                  <Link
+                    href="/dashboard"
+                    className="block px-4 py-2 hover:bg-gray-800"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link href="/" className="block px-4 py-2 hover:bg-gray-800">
+                    Home
+                  </Link>
                   <a
                     onClick={() => signOut()}
                     className="block px-4 py-2 hover:bg-gray-800"

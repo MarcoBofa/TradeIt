@@ -94,16 +94,6 @@ export async function POST(req, res) {
 
     const pointAwards = [10, 6, 4, 2, 2]; // Points for 1st, 2nd, 3rd, 4th, 5th positions
 
-    const updateDb = results.map((result, index) => {
-      return prisma.stockSelection.update({
-        where: { id: result.sId, userId: result.userId },
-        data: {
-          avgChange: result.avg,
-          rank: index + 1,
-        },
-      });
-    });
-
     await Promise.all(updateDb);
 
     for (let i = 0; i < results.length; i++) {
@@ -124,6 +114,16 @@ export async function POST(req, res) {
         },
       });
     }
+
+    const updateDb = results.map((result, index) => {
+      return prisma.stockSelection.update({
+        where: { id: result.sId, userId: result.userId },
+        data: {
+          avgChange: result.avg,
+          rank: index + 1,
+        },
+      });
+    });
 
     console.log("Results:", results);
 
