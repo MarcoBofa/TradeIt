@@ -36,13 +36,19 @@ export default function Home() {
             </div>
             <div className="text-gray-700 text-lg">
               The homepage &#40; this &#41; just to explain the how the website
-              works.
+              works and Login and Register page are pretty self-explanatory.
             </div>
             <div className="text-gray-700 text-lg">
-              Login and Register page are pretty self-explanatory. The Dashboard
-              is the heart of the platform, with features like the Watchlist for
-              stock tracking and MyCompetition for participating in trading
-              contests. The Leaderboard showcases user rankings.
+              Dashboard is the core of the website, is divided into 3 &#40; +1
+              sadly not implemented, now &#41; subparts, the whatchlist where
+              the user can select and remove stocks to monitor, provide
+              real-time data of the stocks selected. MyCompetition page, where
+              the users can participate in currently ongoing competition by
+              simply clicking on the button and selecting the 3 stocks that
+              he/she wants use to win the competition. Below currently active
+              competition the users can scroll and see the past competitions.
+              Lastly there is the Leaderbord page, where ranking of the users
+              can be seen.
             </div>
             <div className="text-gray-700 text-lg">
               The Dashboard is the heart of the platform, with features like the
