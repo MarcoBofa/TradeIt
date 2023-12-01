@@ -35,11 +35,19 @@ export default function Home() {
               Dashboard.
             </div>
             <div className="text-gray-700 text-lg">
-              Home provides an introduction to the site. Login and Register are
-              straightforward. The Dashboard is the heart of the platform, with
-              features like the Watchlist for stock tracking and MyCompetition
-              for participating in trading contests. The Leaderboard showcases
-              user rankings.
+              The homepage &#40; this &#41; just to explain the how the website
+              works.
+            </div>
+            <div className="text-gray-700 text-lg">
+              Login and Register page are pretty self-explanatory. The Dashboard
+              is the heart of the platform, with features like the Watchlist for
+              stock tracking and MyCompetition for participating in trading
+              contests. The Leaderboard showcases user rankings.
+            </div>
+            <div className="text-gray-700 text-lg">
+              The Dashboard is the heart of the platform, with features like the
+              Watchlist for stock tracking and MyCompetition for participating
+              in trading contests. The Leaderboard showcases user rankings.
             </div>
             <div className="text-gray-700 text-lg">
               Registration is simple via Google, GitHub, or email. Once inside,
