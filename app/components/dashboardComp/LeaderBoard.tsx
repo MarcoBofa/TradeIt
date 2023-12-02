@@ -79,9 +79,15 @@ const Leaderboard: React.FC<DashboardProps> = ({ user }) => {
               {leaderboard.map((entry, index) => (
                 <tr
                   key={entry.id}
-                  className={`${index % 2 === 0 ? "bg-white" : "bg-blue-50"}`}
+                  className={`${
+                    user.id === entry.id
+                      ? "bg-orange-200"
+                      : index % 2 === 0
+                        ? "bg-white"
+                        : "bg-blue-50"
+                  }`}
                 >
-                  <td className="pt-2 pb-2 pl-4 pr-2 font-medium text-black">
+                  <td className="pt-2 pb-2 pl-4 pr-2 font-medium text-black ">
                     {entry.name}
                   </td>
                   <td className="pt-2 pb-2 pl-2 pr-4 text-right text-black">
