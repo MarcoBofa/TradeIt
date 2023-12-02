@@ -30,7 +30,6 @@ const MainComponent: React.FC<DashboardProps> = ({ user }) => {
             data.stockSymbols || ["MSFT", "AAPL", "TSLA", "PYPL", "AMD"]
           );
         } catch (error) {
-          console.error("Error fetching watchlist:", error);
           setWatchlist(["MSFT", "AAPL", "TSLA", "PYPL", "AMD"]);
         }
       }

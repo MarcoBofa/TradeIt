@@ -42,7 +42,6 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
           throw new Error("Error fetching competition data");
         }
         const data = await response.json();
-        console.log("newww commmmps", data);
         setCompetition(data.response);
       } catch (error) {
         console.error("Fetch error:", error);
@@ -58,7 +57,6 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
 
         const data = await response.json();
         setOldComps(data.comps);
-        console.log("old commmmps", data.comps);
       } catch (error) {
         console.error("Fetch error:", error);
       }
@@ -69,7 +67,10 @@ const MyCompetition: React.FC<DashboardProps> = ({ user }) => {
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center p-4 bg-gray-200 w-full">
+    <div
+      className="flex flex-col items-center p-4 bg-gray-200 w-full"
+      style={{ maxWidth: "calc(100% - 250px" }}
+    >
       <h1 className="text-3xl font-bold mb-10">Current Ongoing Competition</h1>
       {competition && <CompBox user={user} compData={competition} />}
       <h1 className="text-3xl font-bold mb-10">Past competitions</h1>

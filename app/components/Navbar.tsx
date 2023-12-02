@@ -42,10 +42,15 @@ const Navbar: React.FC<navbarPros> = ({ currentUser }) => {
                   <Link
                     href="/dashboard"
                     className="block px-4 py-2 hover:bg-gray-800"
+                    onClick={() => setDropdownOpen(false)}
                   >
                     Dashboard
                   </Link>
-                  <Link href="/" className="block px-4 py-2 hover:bg-gray-800">
+                  <Link
+                    href="/"
+                    className="block px-4 py-2 hover:bg-gray-800"
+                    onClick={() => setDropdownOpen(false)}
+                  >
                     Home
                   </Link>
                   <a

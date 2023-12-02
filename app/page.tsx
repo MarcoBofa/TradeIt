@@ -22,17 +22,42 @@ export default function Home() {
       </div>
       <div className="bg-gray-100 min-h-screen">
         <div className="container mx-auto px-4 py-12">
+          <div className="text-center text-orange-500 text-4xl mb-8">CIAO!</div>
           <h1 className="text-5xl font-bold text-orange-600 text-center mb-10">
             Discover the Website!
           </h1>
-          <div className="text-center text-orange-500 text-4xl mb-8">CIAO!</div>
+
           <div className="bg-orange-100 rounded-lg p-8 shadow-lg space-y-6">
             <div className="text-orange-500 font-semibold text-2xl mb-4">
               Website Overview:
             </div>
             <div className="text-orange-400 text-xl">
-              There are four primary sections: Home, Login, Register, and
-              Dashboard.
+              There are four primary sections:{" "}
+              <Link className=" hover:text-orange-700 hover:underline" href="/">
+                Home
+              </Link>
+              ,{" "}
+              <Link
+                className=" hover:text-orange-700 hover:underline"
+                href="/Login"
+              >
+                Login
+              </Link>
+              ,{" "}
+              <Link
+                className=" hover:text-orange-700 hover:underline"
+                href="/Register"
+              >
+                Register
+              </Link>
+              , and{" "}
+              <Link
+                className=" hover:text-orange-700 hover:underline"
+                href="/dashboard"
+              >
+                Dashboard
+              </Link>
+              .
             </div>
             <div className="text-gray-700 text-lg">
               The homepage &#40; this &#41; just to explain the how the website
@@ -50,29 +75,50 @@ export default function Home() {
               Lastly there is the Leaderbord page, where ranking of the users
               can be seen.
             </div>
+            <div className="text-orange-400 text-2xl">
+              <strong>How the website works:</strong>
+            </div>
+
             <div className="text-gray-700 text-lg">
-              The Dashboard is the heart of the platform, with features like the
-              Watchlist for stock tracking and MyCompetition for participating
-              in trading contests. The Leaderboard showcases user rankings.
+              Users can <span className="text-orange-400">register</span> and{" "}
+              <span className="text-orange-400">login</span> either using google
+              or github or simply by providing an email and a password. Once
+              logged in the user can check the dashboard.
             </div>
             <div className="text-gray-700 text-lg">
-              Registration is simple via Google, GitHub, or email. Once inside,
-              the Dashboard awaits with a Watchlist that uses FinnHub API for
-              real-time stock data. Note: rapid refreshing may lead to a
-              temporary rate limit due to API constraints.
+              The <span className="text-orange-400">watchlist</span> makes
+              request to the FinnHub API to retrieve real-time data &#40;
+              unfortunately due to free tier limitation, if the user keeps
+              refreshing quickly it can get a rate limit and have to wait like
+              30 seconds before getting back the data. Plus many of the stocks
+              are not available for detailed data retrieval. So to avoid errors
+              a pop-up will appear to block a invalid selections &#41;
             </div>
             <div className="text-gray-700 text-lg">
-              The competition aspect is simplified for user-friendliness.
-              Performance is measured by the percentage change of selected
-              stocks, distributed evenly across three choices. Competitions open
-              and close daily at specified times, managed by cron jobs that
-              trigger the necessary API calls.
+              Users can then participate in{" "}
+              <span className="text-orange-400">trading competition</span>, i
+              had to make some simplifications because it was already hard
+              enough to be done like it is now. For instance, having $100,000 to
+              allocate does not make a significant difference if there's a
+              maximum limit per stock. Therefore, performance is calculated
+              based on the overall percentage change of the selected stocks,
+              with the investment amount simulating being evenly distributed
+              across three stocks. The competition start and end each day at
+              00:00-00:10 &#40;CST&#41;, i changed the weekly timing to make it
+              easier to test functionalities. To open and close competitions i
+              set-up cron jobs that send request to my API every day at said
+              time. when the competiton closes rankings are calculated, points
+              assigned and Leaderbord updated. for the same reason explained in
+              the watchlist it's possible that data of the stocks selected might
+              not be immediately visible in the competition summaries.
             </div>
             <div className="text-gray-700 text-lg">
-              As competitions conclude, rankings are determined, points awarded,
-              and the Leaderboard updated. There may be a short delay before
-              stock data becomes visible due to the same rate limits mentioned
-              earlier.
+              In the <span className="text-orange-400">Leaderboard</span> is
+              possible to see personal points and the ranking of the users.
+            </div>
+            <div className="text-gray-700 text-lg">
+              The recover password is not implemented :c, but it shows a nice
+              pop-up!
             </div>
           </div>
         </div>
@@ -113,24 +159,13 @@ export default function Home() {
 //         <div className="flex items-center justify-center text-orange-300 text-1xl w-[1500px] mt-1"></div>
 //         users can obviously register and login either using google or github or
 //         simply by providing an email and a password. Once logged in the user can
-//         check the dashboard and add stocks to the watchlist. The whatchlist
-//         makes real-time calls with the FinnHub API to retrieve real-time data
+//         check the dashboard and add stocks to the watchlist.
+//          The whatchlist makes real-time calls with the FinnHub API to retrieve real-time data
 //         &#40; unfortunately due to free tier limitation, if the user keeps
 //         refreshing quickly it can get a rate limit and have to wait like 30
 //         seconds before getting back the data. Plus many of the stocks are not
 //         available to a pop-up will appear to block a invalid selection &#41;
-//         Users can then participate in ongoing competition, i had to make some
-//         sismplifications because it was already hard enough like that, for
-//         example it doesn't make a huge difference to have 100.000$ to allocate
-//         if there is a max allocation. Simply the performance are based on the
-//         overall percentage change of the stocks selected as the amount is evenly
-//         spread across the 3 stocks. The competition start and end each day at
-//         00:00-00:10 &#40;CST&#41;. To open the competition and close them i
-//         set-up cron jobs that send request to my API each time at said time.
-//         when the competiton closes rankings are calculated, points assigned and
-//         Leaderbord updated. for the same reason explained in the watchlist it's
-//         possible that data of the stocks selected might not be immediately
-//         visible.
+
 //       </div>
 
 //       {/* Removed the Image component */}

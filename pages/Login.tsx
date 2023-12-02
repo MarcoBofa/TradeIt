@@ -108,7 +108,7 @@ const Login: React.FC = () => {
 
       <svg
         className="absolute"
-        style={{ top: "30%", right: "37%", transform: "translate(50%, -50%)" }}
+        style={{ top: "25%", right: "37%", transform: "translate(50%, -50%)" }}
         viewBox="0 0 100 100"
         width="100"
         height="100"
@@ -123,7 +123,15 @@ const Login: React.FC = () => {
       </svg>
 
       <div className="p-8 bg-white rounded-lg shadow-top max-w-md w-full relative z-10">
-        <h1 className="text-orange-500 text-3xl mb-4">Login</h1>
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-orange-500 text-3xl">Login</h1>
+          <Link
+            href="/"
+            className="text-blue-500 hover:text-blue-800 transition duration-300 ease-in-out"
+          >
+            Go home →
+          </Link>
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <InputField
@@ -143,12 +151,14 @@ const Login: React.FC = () => {
               required
             />
           </div>
+
           <button
             type="submit"
             className="w-full p-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 mb-4"
           >
             Login
           </button>
+
           <button
             className="w-full p-2 text-white bg-gray-800 rounded-md hover:bg-blue-900 mb-4 flex items-center justify-center"
             onClick={() =>
@@ -171,14 +181,14 @@ const Login: React.FC = () => {
         <div className="flex justify-between mb-1">
           <Link
             href="/Register"
-            className="text-blue-500 hover:text-blue-700 mt-7 inline-block"
+            className="text-blue-500 hover:text-blue-800 mt-7 inline-block"
           >
             ← Need to Register?
           </Link>
           <a
             href="#"
             onClick={handleOpenModal}
-            className="text-blue-500 hover:text-blue-700 mt-7 inline-block"
+            className="text-blue-500 hover:text-blue-800 mt-7 inline-block"
           >
             Forgot your password? →
           </a>

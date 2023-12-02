@@ -51,7 +51,10 @@ const Leaderboard: React.FC<DashboardProps> = ({ user }) => {
   }, [user.id]);
 
   return (
-    <div className="flex flex-col items-center justify-center bg-blue-50 min-h-screen w-full">
+    <div
+      className="flex flex-col items-center justify-center bg-blue-50 min-h-screen w-full"
+      style={{ maxWidth: "calc(100% - 250px" }}
+    >
       <div className="container max-w-2xl p-6 bg-white rounded-lg shadow-xl">
         <h1 className="text-4xl font-bold text-blue-800 mb-8 text-center">
           Leaderboard

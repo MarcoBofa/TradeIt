@@ -34,7 +34,7 @@ const RecoverPassModal: FC<RecoverPassModalProps> = ({
 
   const onSubmit = (data: ModalForm) => {
     toast.success(
-      "If the Email is valid, you will receive a link to reset your password!",
+      "If the Email is valid, you will receive a link to reset your password! :)",
       {
         duration: 5000,
       }
