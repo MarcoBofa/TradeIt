@@ -4,6 +4,26 @@ import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
   if (req.method === "POST") {
+    const existingCompetition = await prisma.competition.findFirst({
+      where: {
+        startDate: {
+          lt: currentDate,
+        },
+        endDate: {
+          gt: currentDate,
+        },
+        status: true,
+      },
+    });
+
+    // If there is an existing competition, return an error response
+    if (existingCompetition) {
+      console.error("A competition is already ongoing.");
+      return NextResponse.json(
+        { error: "A competition is already ongoing." },
+        { status: 400 }
+      );
+    }
     // console.log("Authorization Header:", req);
     // if (req.headers.authorization === process.env.CRON_JOB_SECRET) {
     const startDate = new Date(); // Adjust this to the beginning of the competition
