@@ -3,6 +3,7 @@ import prisma from "@/app/libs/prismadb";
 import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
+  const currentDate = new Date();
   if (req.method === "POST") {
     const existingCompetition = await prisma.competition.findFirst({
       where: {
