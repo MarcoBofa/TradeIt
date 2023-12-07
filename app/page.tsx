@@ -61,20 +61,25 @@ export default function Home() {
             </div>
             <div className="text-gray-700 text-lg">
               The homepage &#40; this &#41; just to explain the how the website
-              works and Login and Register page are pretty self-explanatory.
+              works. Login and Register page are pretty self-explanatory.
             </div>
             <div className="text-gray-700 text-lg">
               Dashboard is the core of the website, is divided into 3 &#40; +1
-              sadly not implemented, now &#41; subparts, the whatchlist where
-              the user can select and remove stocks to monitor, provide
-              real-time data of the stocks selected. MyCompetition page, where
-              the users can participate in currently ongoing competition by
-              simply clicking on the button and selecting the 3 stocks that
-              he/she wants use to win the competition. Below currently active
+              sadly not implemented, now &#41; subparts, the{" "}
+              <span className="text-orange-400">whatchlist</span> where the user
+              can select and remove stocks to monitor, provide real-time data of
+              the stocks selected.{" "}
+              <span className="text-orange-400">MyCompetition</span>, where the
+              users can participate in currently ongoing competition by simply
+              clicking on the button and selecting the 3 stocks that he/she
+              wants use to win the competition. Below currently active
               competition the users can scroll and see the past competitions.
-              Lastly there is the Leaderbord page, where ranking of the users
-              can be seen.
+              Lastly there is the{" "}
+              <span className="text-orange-400">Leaderbord</span>, where ranking
+              of the users can be seen.
             </div>
+            <div className="text-gray-700 text-lg"></div>
+            <div className="text-gray-700 text-lg"></div>
             <div className="text-orange-400 text-2xl">
               <strong>How the website works:</strong>
             </div>
@@ -103,14 +108,15 @@ export default function Home() {
               maximum limit per stock. Therefore, performance is calculated
               based on the overall percentage change of the selected stocks,
               with the investment amount simulating being evenly distributed
-              across three stocks. The competition start and end each day at
-              00:00-00:10 &#40;CST&#41;, i changed the weekly timing to make it
-              easier to test functionalities. To open and close competitions i
-              set-up cron jobs that send request to my API every day at said
-              time. when the competiton closes rankings are calculated, points
-              assigned and Leaderbord updated. for the same reason explained in
-              the watchlist it's possible that data of the stocks selected might
-              not be immediately visible in the competition summaries.
+              across three stocks. The competition end and start each day at
+              4:00pm-4:10pm &#40;CST&#41;, besides the weekend that the market
+              is closed. I changed the weekly timing to make it easier to test
+              functionalities. To open and close competitions i set-up cron jobs
+              that send request to my API every day at said time. when the
+              competiton closes rankings are calculated, points assigned and
+              Leaderbord updated. for the same reason explained in the watchlist
+              it's possible that data of the stocks selected might not be
+              immediately visible in the competition summaries.
             </div>
             <div className="text-gray-700 text-lg">
               In the <span className="text-orange-400">Leaderboard</span> is

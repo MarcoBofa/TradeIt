@@ -6,17 +6,17 @@ const fetchPrice = async (symbol, retries = 3, backoff = 2000) => {
   try {
     const response = await finnHub.get("/quote", {
       params: {
-        symbol, // This is the symbol for the stock you want to get data for
+        symbol,
       },
     });
-    return response.data.c; // Assuming 'c' is the current price field
+    return response.data.c;
   } catch (error) {
     console.error("Error fetching price for symbol:", symbol, error);
     if (retries > 0) {
       await new Promise((resolve) => setTimeout(resolve, backoff));
       return fetchPrice(symbol, retries - 1, backoff * 2);
     }
-    return null; // After all retries, if it still fails, return null
+    return null;
   }
 };
 
@@ -46,8 +46,6 @@ export async function POST(req, res) {
       include: { selections: true },
     });
 
-    console.log("Closing competition:", stockSelections);
-
     const updatePromises = stockSelections.flatMap((selection) =>
       selection.selections.map((stock) =>
         fetchPrice(stock.tickerSymbol).then((finalPrice) => {
@@ -76,8 +74,6 @@ export async function POST(req, res) {
     });
 
     results.sort((a, b) => b.avgChange - a.avgChange);
-
-    console.log("Results:", results);
 
     const pointAwards = [10, 6, 4, 2, 2];
 
